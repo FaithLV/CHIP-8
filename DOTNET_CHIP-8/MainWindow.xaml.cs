@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace DOTNET_CHIP_8
 {
@@ -27,8 +28,6 @@ namespace DOTNET_CHIP_8
             CPUCore = new CHIP_8();
 
         }
-
-
 
         private void Window_Drop(object sender, DragEventArgs e)
         {

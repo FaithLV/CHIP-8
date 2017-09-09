@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace DOTNET_CHIP_8
 {
@@ -50,6 +51,7 @@ namespace DOTNET_CHIP_8
         ushort stackPtr = 0;
 
         bool keypress = false;
+        uint romSize = 0;
 
         //VM Initialization
         public CHIP_8()
@@ -59,26 +61,59 @@ namespace DOTNET_CHIP_8
             LoadFonts();
         }
 
-        
         public void LoadGame(byte[] game)
         {
             Console.WriteLine($"ROM File Size: {game.Length}K");
-            int romSize = 0;
+            romSize = 0;
 
             //Load game in memory
-            for(int i = 0; i < game.Length; i++)
+            for (int i = 0; i < game.Length; i++)
             {
                 romSize++;
                 memory[512 + i] = game[i];
             }
 
             Console.WriteLine($"Loaded {romSize}K into memory!");
+
+            while(romSize > 0)
+            {
+                EmulateCycle();
+            }
         }
 
-        public void EmulateCycle()
+        private void EmulateCycle()
         {
-            //fetch op code
             opcode = (ushort)(memory[pc] << 8 | memory[pc + 1]);
+
+            Console.WriteLine("0x{0:x}", opcode);
+            Console.WriteLine("0x{0:x}", opcode & 0xF000);
+
+            romSize = 0;
+
+            //switch (opcode & 0xF000)
+            //{
+            //    case 0xA000: // ANNN: Sets I to the address NNN
+            //                 // Execute opcode
+            //        Console.WriteLine("Running {0:X}", opcode);
+            //        I = (ushort)(opcode & 0x0FFF);
+            //        pc += 2;
+            //        break;
+            //    default:
+            //        Console.WriteLine("Opcode unknown: {0:X}", opcode);
+            //        break;
+            //}
+
+            UpdateTimers();
+        }
+
+        private void UpdateTimers()
+        {
+            if (delay_timer > 0)
+                delay_timer--;
+
+            if (sound_timer > 0)
+                //Console.WriteLine("BEEP");
+                sound_timer--;
         }
 
         private void LoadFonts()
