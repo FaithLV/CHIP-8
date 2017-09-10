@@ -9,5 +9,5 @@
         Height="350" Width="525"
         AllowDrop="True"
         Drop="Window_Drop">
-    
+    <Image x:Name="RenderWindow" Width="64" Height="32"/>
 </Window>

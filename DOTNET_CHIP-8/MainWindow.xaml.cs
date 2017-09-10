@@ -21,12 +21,13 @@ namespace DOTNET_CHIP_8
     public partial class MainWindow : Window
     {
         CHIP_8 CPUCore = null;
+        DispatcherTimer gfxClock = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(16.67) };
 
         public MainWindow()
         {
             InitializeComponent();
             CPUCore = new CHIP_8();
-
+            gfxClock.Tick += GFX_Tick;
         }
 
         private void Window_Drop(object sender, DragEventArgs e)
@@ -44,6 +45,15 @@ namespace DOTNET_CHIP_8
         {
             //CPUCore = new CHIP_8();
             CPUCore.LoadGame(game);
+            gfxClock.Start();
+        }
+
+        private void GFX_Tick(object sender, EventArgs e)
+        {
+            byte[] gfxarray = CPUCore.gfx;
+            MemoryStream ms = new MemoryStream(gfxarray);
+            //BitmapImage buffer = BitmapImage.Strea
+            //RenderWindow.Source = 
         }
     }
 }

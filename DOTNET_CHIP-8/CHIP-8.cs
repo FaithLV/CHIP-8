@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -14,7 +15,7 @@ namespace DOTNET_CHIP_8
         //VM Specifications
         byte[] memory = new byte[4096];
         byte[] cpu_V = new byte[16];
-        byte[] gfx = new byte[2048];
+        public byte[] gfx = new byte[64*32]; //gfx buffer
         ushort[] key = new ushort[16];
 
         byte[] Fontset = {
@@ -86,12 +87,13 @@ namespace DOTNET_CHIP_8
         {
             opcode = (ushort)(memory[pc] << 8 | memory[pc + 1]);
 
-            int checksum = 0;
-            foreach(var px in gfx)
-            {
-                checksum = +px;
-            }
-            Console.WriteLine(checksum);
+            //int checksum = 0;
+            //foreach (var px in gfx)
+            //{
+            //    Console.WriteLine(px);
+            //    checksum = +px;
+            //}
+            //Console.WriteLine(checksum);
 
 
             //Console.WriteLine("0x{0:x}", opcode);
@@ -262,6 +264,7 @@ namespace DOTNET_CHIP_8
                         ushort y = cpu_V[(opcode & 0x00F0) >> 4];
                         ushort height = (ushort)(opcode & 0x000F);
                         ushort pixel;
+                        Console.WriteLine("Writing to gfx buffer");
 
                         cpu_V[0xF] = 0;
                         for (int yline = 0; yline < height; yline++)
@@ -276,6 +279,7 @@ namespace DOTNET_CHIP_8
                                         cpu_V[0xF] = 1;
                                     }
                                     gfx[x + xline + ((y + yline) * 64)] ^= 1;
+                                    //Console.WriteLine($"Writing 1 to buffer 0:{x + xline + ((y + yline) * 64)}");
                                 }
                             }
                         }
@@ -398,6 +402,9 @@ namespace DOTNET_CHIP_8
             }
 
             UpdateTimers();
+
+            //debug shit
+            Thread.Sleep(5);
         }
 
         private ushort Random()
