@@ -58,6 +58,7 @@ namespace DOTNET_CHIP_8
         //VM Initialization
         public CHIP_8()
         {
+            Console.WriteLine("Powering CHIP-8...");
             Console.WriteLine($"System Memory: {memory.Length} bytes");
             Console.WriteLine($"Stack Size: {stack.Length}");
             LoadFonts();
@@ -82,18 +83,6 @@ namespace DOTNET_CHIP_8
         {
             opcode = (ushort)(memory[pc] << 8 | memory[pc + 1]);
 
-            //int checksum = 0;
-            //foreach (var px in gfx)
-            //{
-            //    Console.WriteLine(px);
-            //    checksum = +px;
-            //}
-            //Console.WriteLine(checksum);
-
-
-            //Console.WriteLine("0x{0:x}", opcode);
-            //Console.WriteLine("0x{0:x}", opcode & 0xF000);
-
             // Process opcode
             switch (opcode & 0xF000)
             {
@@ -110,7 +99,7 @@ namespace DOTNET_CHIP_8
                         case 0x000E: // 0x00EE: Returns from subroutine
                             stackPtr--;           // 16 levels of stack, decrease stack pointer to prevent overwrite
                             pc = stack[stackPtr]; // Put the stored return address from the stack back into the program counter					
-                            pc += 2;        // Don't forget to increase the program counter!
+                            pc += 2;       
                             break;
 
                         default:
@@ -425,7 +414,7 @@ namespace DOTNET_CHIP_8
                 memory[i] = Fontset[i];
             }
 
-            Console.WriteLine("Fontset loaded into memory.");
+            Console.WriteLine("Fontset loaded into memory header.");
         }
 
         void CPUNull()

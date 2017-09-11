@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Runtime.InteropServices;
 
 namespace DOTNET_CHIP_8
 {
@@ -28,6 +16,7 @@ namespace DOTNET_CHIP_8
         public MainWindow()
         {
             InitializeComponent();
+            AllocConsole(); 
 
             CPUCore = new CHIP_8();
 
@@ -50,30 +39,70 @@ namespace DOTNET_CHIP_8
 
         }
 
+        //Load ROM into memory
         private void LoadNewGame(byte[] game)
         {
-            
             CPUCore.LoadGame(game);
             cpuClock.Start();
             gfxClock.Start();
-
-
-            
         }
 
+        //CPU Timer tick
         private void CPUCycle(object sender, EventArgs e)
         {
-            Console.WriteLine("cpu tick");
+            SwitchCPU();
             CPUCore.EmulateCycle();
         }
 
+        //GFX Timer tick
         private void GFX_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("gfx tick");
+            SwitchGPU();
+
             byte[] gfxarray = CPUCore.gfx;
-            MemoryStream ms = new MemoryStream(gfxarray);
-            //BitmapImage buffer = BitmapImage.Strea
-            //RenderWindow.Source = 
+            DrawGFXBuffer(gfxarray);
+        }
+
+        private void DrawGFXBuffer(byte[] buffer)
+        {
+            //draw
+
+        }
+
+
+        //DEBUG
+        private void SwitchGPU()
+        {
+            if (GPU_Marker.Visibility == Visibility.Hidden)
+            {
+                Dispatcher.Invoke(new Action(() => GPU_Marker.Visibility = Visibility.Visible));
+            }
+            else
+            {
+                Dispatcher.Invoke(new Action(() => GPU_Marker.Visibility = Visibility.Hidden));
+            }
+        }
+
+        private void SwitchCPU()
+        {
+            if (CPU_Marker.Visibility == Visibility.Hidden)
+            {
+                Dispatcher.Invoke(new Action(() => CPU_Marker.Visibility = Visibility.Visible));
+            }
+            else
+            {
+                Dispatcher.Invoke(new Action(() => CPU_Marker.Visibility = Visibility.Hidden));
+            }
+        }
+
+        //DLLs for console window
+        [DllImport("Kernel32")]
+        private static extern void AllocConsole();
+        private void OpenConsole()
+        {
+            AllocConsole();
+            Thread.Sleep(1);
+            Console.WriteLine("Booting CHIP-8");
         }
     }
 }
