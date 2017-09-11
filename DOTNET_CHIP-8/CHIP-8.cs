@@ -53,7 +53,7 @@ namespace DOTNET_CHIP_8
 
         bool DrawCall = false;
         bool keypress = false;
-        uint romSize = 0;
+        public uint romSize = 0;
 
         //VM Initialization
         public CHIP_8()
@@ -76,14 +76,9 @@ namespace DOTNET_CHIP_8
             }
 
             Console.WriteLine($"Loaded {romSize}K into memory!");
-
-            while(romSize > 0)
-            {
-                EmulateCycle();
-            }
         }
 
-        private void EmulateCycle()
+        public void EmulateCycle()
         {
             opcode = (ushort)(memory[pc] << 8 | memory[pc + 1]);
 
@@ -264,7 +259,7 @@ namespace DOTNET_CHIP_8
                         ushort y = cpu_V[(opcode & 0x00F0) >> 4];
                         ushort height = (ushort)(opcode & 0x000F);
                         ushort pixel;
-                        Console.WriteLine("Writing to gfx buffer");
+                        //Console.WriteLine("Writing to gfx buffer");
 
                         cpu_V[0xF] = 0;
                         for (int yline = 0; yline < height; yline++)
@@ -404,7 +399,7 @@ namespace DOTNET_CHIP_8
             UpdateTimers();
 
             //debug shit
-            Thread.Sleep(5);
+            //Thread.Sleep(5);
         }
 
         private ushort Random()

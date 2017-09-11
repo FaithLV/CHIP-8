@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,13 +22,21 @@ namespace DOTNET_CHIP_8
     public partial class MainWindow : Window
     {
         CHIP_8 CPUCore = null;
-        DispatcherTimer gfxClock = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(16.67) };
+        DispatcherTimer gfxClock = null;
+        DispatcherTimer cpuClock = null;
 
         public MainWindow()
         {
             InitializeComponent();
+
             CPUCore = new CHIP_8();
+
+            gfxClock = new DispatcherTimer();
+            gfxClock.Interval = TimeSpan.FromMilliseconds(16.67);
             gfxClock.Tick += GFX_Tick;
+
+            cpuClock = new DispatcherTimer();
+            cpuClock.Tick += CPUCycle;
         }
 
         private void Window_Drop(object sender, DragEventArgs e)
@@ -43,13 +52,24 @@ namespace DOTNET_CHIP_8
 
         private void LoadNewGame(byte[] game)
         {
-            //CPUCore = new CHIP_8();
+            
             CPUCore.LoadGame(game);
+            cpuClock.Start();
             gfxClock.Start();
+
+
+            
+        }
+
+        private void CPUCycle(object sender, EventArgs e)
+        {
+            Console.WriteLine("cpu tick");
+            CPUCore.EmulateCycle();
         }
 
         private void GFX_Tick(object sender, EventArgs e)
         {
+            Console.WriteLine("gfx tick");
             byte[] gfxarray = CPUCore.gfx;
             MemoryStream ms = new MemoryStream(gfxarray);
             //BitmapImage buffer = BitmapImage.Strea
