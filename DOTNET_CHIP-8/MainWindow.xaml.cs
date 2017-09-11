@@ -10,6 +10,7 @@ namespace DOTNET_CHIP_8
     public partial class MainWindow : Window
     {
         CHIP_8 CPUCore = null;
+        DotRenderer Renderer = new DotRenderer();
         DispatcherTimer gfxClock = null;
         DispatcherTimer cpuClock = null;
 
@@ -26,6 +27,9 @@ namespace DOTNET_CHIP_8
 
             cpuClock = new DispatcherTimer();
             cpuClock.Tick += CPUCycle;
+
+            Dispatcher.Invoke(new Action(() => EmuGrid.Children.Add(Renderer.RenderPort(5))));
+
         }
 
         private void Window_Drop(object sender, DragEventArgs e)

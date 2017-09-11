@@ -9,7 +9,7 @@
         Height="350" Width="525"
         AllowDrop="True"
         Drop="Window_Drop">
-    <Grid>
+    <Grid x:Name="EmuGrid">
         <Rectangle x:Name="CPU_Marker" Visibility="Hidden" Fill="Green" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Rectangle x:Name="GPU_Marker" Visibility="Hidden" Fill="Red" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25"/>
     </Grid>
