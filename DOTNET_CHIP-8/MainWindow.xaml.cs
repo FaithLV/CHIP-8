@@ -29,6 +29,7 @@ namespace DOTNET_CHIP_8
             cpuClock.Tick += CPUCycle;
 
             Dispatcher.Invoke(new Action(() => EmuGrid.Children.Add(Renderer.RenderPort(5))));
+            Console.WriteLine($"Pixel buffer size: {Renderer.check}");
 
         }
 

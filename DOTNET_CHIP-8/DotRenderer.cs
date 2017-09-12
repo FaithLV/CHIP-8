@@ -15,6 +15,8 @@ namespace DOTNET_CHIP_8
 
         int width = 64;
         int height = 32;
+        int xi = 0;
+        public int check = 0;
 
         public DotRenderer()
         {
@@ -41,24 +43,29 @@ namespace DOTNET_CHIP_8
         private Rectangle Pixel(int i)
         {
             int size = 5;
+            int yi = 0;
+            check++;
 
             Rectangle px = new Rectangle();
+            px.Fill = new SolidColorBrush(Colors.Red);
 
             px.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             px.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            Console.WriteLine(i);
 
-            if (i < 64)
+            if( i% 64 == 0)
             {
-                px.Fill = new SolidColorBrush(Colors.Red);
-                px.Margin = new System.Windows.Thickness(i * size, 0, 0, 0);
+                yi = i / 64;
             }
-            else if(i > 64)
+
+            if (xi < 64)
             {
-                px.Fill = new SolidColorBrush(Colors.Blue);
-                px.Margin = new System.Windows.Thickness((i-64 * size), size, 0, 0);
+                xi++;
+                px.Margin = new System.Windows.Thickness(size * xi, yi*size, 0, 0);
             }
-            
+            else
+            {
+                xi = 0;
+            }
 
             px.Width = size;
             px.Height = size;
