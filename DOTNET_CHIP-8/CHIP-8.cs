@@ -39,6 +39,7 @@ namespace DOTNET_CHIP_8
 
         //two ("timers") registers count at 60hz
         //when set over 0, they will count down to 0
+        DispatcherTimer TimerClock = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(16.666666666667) };
         ushort delay_timer = 0;
         ushort sound_timer = 0;
 
@@ -62,6 +63,7 @@ namespace DOTNET_CHIP_8
             Console.WriteLine($"System Memory: {memory.Length} bytes");
             Console.WriteLine($"Stack Size: {stack.Length}");
             LoadFonts();
+            TimerClock.Tick += UpdateTimers;
         }
 
         public void LoadGame(byte[] game)
@@ -77,6 +79,7 @@ namespace DOTNET_CHIP_8
             }
 
             Console.WriteLine($"Loaded {romSize}K into memory!");
+            TimerClock.Start();
         }
 
         public void EmulateCycle()
@@ -380,11 +383,6 @@ namespace DOTNET_CHIP_8
                     Console.WriteLine("Unknown opcode: 0x%X\n", opcode);
                     break;
             }
-
-            UpdateTimers();
-
-            //debug shit
-            //Thread.Sleep(5);
         }
 
         private ushort Random()
@@ -393,13 +391,12 @@ namespace DOTNET_CHIP_8
         }
 
 
-        private void UpdateTimers()
+        private void UpdateTimers(object sender, EventArgs e)
         {
             if (delay_timer > 0)
                 delay_timer--;
 
             if (sound_timer > 0)
-                //Console.WriteLine("BEEP");
                 sound_timer--;
         }
 

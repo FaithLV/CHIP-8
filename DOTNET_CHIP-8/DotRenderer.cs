@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -11,18 +7,36 @@ namespace DOTNET_CHIP_8
 {
     public class DotRenderer
     {
-        public Rectangle[] Pixels = new Rectangle[2048];
+        Rectangle[] Pixels = new Rectangle[2048];
 
         int width = 64;
         int height = 32;
         int xi = 0;
         public int check = 0;
 
+        Brush PixelON = new SolidColorBrush(Colors.White);
+        Brush PixelOFF = new SolidColorBrush(Colors.Black);
+
         public DotRenderer()
         {
             for (int i = 0; i < width * height; i++)
             {
                 Pixels[i] = Pixel(i);
+            }
+        }
+
+        public void RenderPixels(byte[] buffer)
+        {
+            for(int i = 0; i < Pixels.Length; i++)
+            {
+                if(buffer[i] == 1)
+                {
+                    Pixels[i].Fill = PixelON;
+                }
+                else
+                {
+                    Pixels[i].Fill = PixelOFF;
+                }
             }
         }
 
@@ -40,19 +54,20 @@ namespace DOTNET_CHIP_8
             return port;
         }
 
+
+        int yi = 0;
         private Rectangle Pixel(int i)
         {
             int size = 5;
-            int yi = 0;
             check++;
 
             Rectangle px = new Rectangle();
-            px.Fill = new SolidColorBrush(Colors.Red);
+            //px.Fill = new SolidColorBrush(Colors.Black);
 
             px.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             px.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
 
-            if( i% 64 == 0)
+            if( i % 64 == 0)
             {
                 yi = i / 64;
             }
@@ -61,6 +76,7 @@ namespace DOTNET_CHIP_8
             {
                 xi++;
                 px.Margin = new System.Windows.Thickness(size * xi, yi*size, 0, 0);
+                //Console.WriteLine($"{size*xi} : {yi*size}");
             }
             else
             {
@@ -69,8 +85,6 @@ namespace DOTNET_CHIP_8
 
             px.Width = size;
             px.Height = size;
-
-            //px.Fill = new SolidColorBrush(Colors.Red);
             return px;
         }
     }

@@ -17,7 +17,8 @@ namespace DOTNET_CHIP_8
         public MainWindow()
         {
             InitializeComponent();
-            AllocConsole(); 
+            AllocConsole();
+            Thread.Sleep(5);
 
             CPUCore = new CHIP_8();
 
@@ -26,6 +27,7 @@ namespace DOTNET_CHIP_8
             gfxClock.Tick += GFX_Tick;
 
             cpuClock = new DispatcherTimer();
+            cpuClock.Interval = TimeSpan.FromMilliseconds(1.85);
             cpuClock.Tick += CPUCycle;
 
             Dispatcher.Invoke(new Action(() => EmuGrid.Children.Add(Renderer.RenderPort(5))));
@@ -70,8 +72,7 @@ namespace DOTNET_CHIP_8
 
         private void DrawGFXBuffer(byte[] buffer)
         {
-            //draw
-
+            Renderer.RenderPixels(buffer);
         }
 
 
@@ -108,6 +109,17 @@ namespace DOTNET_CHIP_8
             AllocConsole();
             Thread.Sleep(1);
             Console.WriteLine("Booting CHIP-8");
+        }
+
+        private void DumpGFXBuffer_Button(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("-----------------------RAW GFX Buffer:");
+            byte[] gfxarray = CPUCore.gfx;
+            foreach (byte px in gfxarray)
+            {
+                Console.Write($"{px}, ");
+            }
+            Console.WriteLine();
         }
     }
 }
