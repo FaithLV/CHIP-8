@@ -27,7 +27,7 @@ namespace DOTNET_CHIP_8
             gfxClock.Tick += GFX_Tick;
 
             cpuClock = new DispatcherTimer();
-            //cpuClock.Interval = TimeSpan.FromMilliseconds(1.85);
+            cpuClock.Interval = TimeSpan.FromMilliseconds(1);
             cpuClock.Tick += CPUCycle;
 
             Dispatcher.Invoke(new Action(() => EmuGrid.Children.Add(Renderer.RenderPort(5))));
@@ -124,6 +124,52 @@ namespace DOTNET_CHIP_8
                 Console.Write($"{px}, ");
             }
             Console.WriteLine();
+        }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key.ToString() == "Up")
+            {
+                CPUCore.PressButton(2);
+            }
+
+            if (e.Key.ToString() == "Down")
+            {
+                CPUCore.PressButton(8);
+            }
+
+            if (e.Key.ToString() == "Left")
+            {
+                CPUCore.PressButton(4);
+            }
+
+            if (e.Key.ToString() == "Right")
+            {
+                CPUCore.PressButton(6);
+            }
+        }
+
+        private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key.ToString() == "Up")
+            {
+                CPUCore.UnpressButton(2);
+            }
+
+            if (e.Key.ToString() == "Down")
+            {
+                CPUCore.UnpressButton(8);
+            }
+
+            if (e.Key.ToString() == "Left")
+            {
+                CPUCore.UnpressButton(4);
+            }
+
+            if (e.Key.ToString() == "Right")
+            {
+                CPUCore.UnpressButton(6);
+            }
         }
     }
 }

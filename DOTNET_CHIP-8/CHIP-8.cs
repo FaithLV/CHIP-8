@@ -415,6 +415,16 @@ namespace DOTNET_CHIP_8
             //nothing
         }
 
+        public void PressButton(ushort _key)
+        {
+            key[_key] = 1;
+        }
+
+        public void UnpressButton(ushort _key)
+        {
+            key[_key] = 0;
+        }
+
 
 
     }
