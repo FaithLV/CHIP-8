@@ -11,7 +11,6 @@ namespace DOTNET_CHIP_8
 
         int width = 64;
         int height = 32;
-        int xi = 0;
         public int check = 0;
 
         Brush PixelON = new SolidColorBrush(Colors.White);
@@ -56,6 +55,7 @@ namespace DOTNET_CHIP_8
 
 
         int yi = 0;
+        int xi = 0;
         private Rectangle Pixel(int i)
         {
             int size = 5;
@@ -72,7 +72,7 @@ namespace DOTNET_CHIP_8
                 yi = i / 64;
             }
 
-            if (xi < 64)
+            if (xi < 63)
             {
                 xi++;
                 px.Margin = new System.Windows.Thickness(size * xi, yi*size, 0, 0);

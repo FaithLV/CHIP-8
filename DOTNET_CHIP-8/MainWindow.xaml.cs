@@ -27,7 +27,7 @@ namespace DOTNET_CHIP_8
             gfxClock.Tick += GFX_Tick;
 
             cpuClock = new DispatcherTimer();
-            cpuClock.Interval = TimeSpan.FromMilliseconds(1.85);
+            //cpuClock.Interval = TimeSpan.FromMilliseconds(1.85);
             cpuClock.Tick += CPUCycle;
 
             Dispatcher.Invoke(new Action(() => EmuGrid.Children.Add(Renderer.RenderPort(5))));
@@ -79,6 +79,8 @@ namespace DOTNET_CHIP_8
         //DEBUG
         private void SwitchGPU()
         {
+            return;
+
             if (GPU_Marker.Visibility == Visibility.Hidden)
             {
                 Dispatcher.Invoke(new Action(() => GPU_Marker.Visibility = Visibility.Visible));
@@ -91,6 +93,8 @@ namespace DOTNET_CHIP_8
 
         private void SwitchCPU()
         {
+            return;
+
             if (CPU_Marker.Visibility == Visibility.Hidden)
             {
                 Dispatcher.Invoke(new Action(() => CPU_Marker.Visibility = Visibility.Visible));
