@@ -22,17 +22,19 @@ namespace DOTNET_CHIP_8
             Thread.Sleep(5);
 
             CPUCore = new CHIP_8();
-
+            
             gfxClock = new DispatcherTimer();
             gfxClock.Interval = TimeSpan.FromMilliseconds(16.67);
             gfxClock.Tick += GFX_Tick;
 
             cpuClock = new DispatcherTimer();
-            //cpuClock.Interval = TimeSpan.FromMilliseconds(1);
+            cpuClock.Interval = TimeSpan.FromMilliseconds(1.851851851851852);
             cpuClock.Tick += CPUCycle;
 
             Dispatcher.Invoke(new Action(() => EmuGrid.Children.Add(Renderer.RenderPort(5))));
             Console.WriteLine($"Pixel buffer size: {Renderer.check}");
+
+            ReadConfiguration();
 
         }
 
@@ -129,48 +131,10 @@ namespace DOTNET_CHIP_8
 
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if(e.Key.ToString() == "Up")
-            {
-                CPUCore.PressButton(2);
-            }
-
-            if (e.Key.ToString() == "Down")
-            {
-                CPUCore.PressButton(8);
-            }
-
-            if (e.Key.ToString() == "Left")
-            {
-                CPUCore.PressButton(4);
-            }
-
-            if (e.Key.ToString() == "Right")
-            {
-                CPUCore.PressButton(6);
-            }
         }
 
         private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key.ToString() == "Up")
-            {
-                CPUCore.UnpressButton(2);
-            }
-
-            if (e.Key.ToString() == "Down")
-            {
-                CPUCore.UnpressButton(8);
-            }
-
-            if (e.Key.ToString() == "Left")
-            {
-                CPUCore.UnpressButton(4);
-            }
-
-            if (e.Key.ToString() == "Right")
-            {
-                CPUCore.UnpressButton(6);
-            }
         }
 
         private void DumpOpCodes_Button(object sender, RoutedEventArgs e)
@@ -184,6 +148,19 @@ namespace DOTNET_CHIP_8
             }
             writer.Close();
             Console.WriteLine($"Written {log.Count} entries to OPCode log");
+        }
+
+        private void ReadConfiguration()
+        {
+            IniFile config = new IniFile("emuconfig.ini");
+
+            double freq = Double.Parse(config.Read("Frequency", "CPUCore"));
+            Console.WriteLine($"CPU Frequency: {freq}Hz");
+            cpuClock.Interval = TimeSpan.FromMilliseconds(1000/freq);
+
+            int pxsize = Int32.Parse(config.Read("PixelSize", "DOTRenderer"));
+            Renderer.size = pxsize;
+            Console.WriteLine($"DOTRenderer: Pixel size = {Renderer.size}");
         }
     }
 }

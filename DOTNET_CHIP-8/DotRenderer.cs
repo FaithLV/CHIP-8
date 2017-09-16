@@ -12,6 +12,7 @@ namespace DOTNET_CHIP_8
         int width = 64;
         int height = 32;
         public int check = 0;
+        public int size = 10;
 
         Brush PixelON = new SolidColorBrush(Colors.White);
         Brush PixelOFF = new SolidColorBrush(Colors.Black);
@@ -58,7 +59,6 @@ namespace DOTNET_CHIP_8
         int xi = 0;
         private Rectangle Pixel(int i)
         {
-            int size = 10;
             check++;
 
             Rectangle px = new Rectangle();
