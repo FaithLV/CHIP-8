@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="CHIP-8.cs" />
     <Compile Include="DotRenderer.cs" />
+    <Compile Include="IniFile.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

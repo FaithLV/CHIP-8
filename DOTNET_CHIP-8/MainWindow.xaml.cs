@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace DOTNET_CHIP_8
 {
@@ -27,7 +28,7 @@ namespace DOTNET_CHIP_8
             gfxClock.Tick += GFX_Tick;
 
             cpuClock = new DispatcherTimer();
-            cpuClock.Interval = TimeSpan.FromMilliseconds(1);
+            //cpuClock.Interval = TimeSpan.FromMilliseconds(1);
             cpuClock.Tick += CPUCycle;
 
             Dispatcher.Invoke(new Action(() => EmuGrid.Children.Add(Renderer.RenderPort(5))));
@@ -170,6 +171,19 @@ namespace DOTNET_CHIP_8
             {
                 CPUCore.UnpressButton(6);
             }
+        }
+
+        private void DumpOpCodes_Button(object sender, RoutedEventArgs e)
+        {
+            List<string> log = CPUCore.OpCodeLog;
+
+            StreamWriter writer = new StreamWriter($"{AppDomain.CurrentDomain.BaseDirectory}/opcodes.log");
+            foreach(var entry in log)
+            {
+                writer.WriteLine(entry);
+            }
+            writer.Close();
+            Console.WriteLine($"Written {log.Count} entries to OPCode log");
         }
     }
 }

@@ -58,7 +58,7 @@ namespace DOTNET_CHIP_8
         int xi = 0;
         private Rectangle Pixel(int i)
         {
-            int size = 5;
+            int size = 10;
             check++;
 
             Rectangle px = new Rectangle();

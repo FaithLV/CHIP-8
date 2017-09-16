@@ -52,6 +52,8 @@ namespace DOTNET_CHIP_8
         ushort[] stack = new ushort[16];
         ushort stackPtr = 0;
 
+        public List<string> OpCodeLog = new List<string>();
+
         bool DrawCall = false;
         bool keypress = false;
         public uint romSize = 0;
@@ -85,6 +87,7 @@ namespace DOTNET_CHIP_8
         public void EmulateCycle()
         {
             opcode = (ushort)(memory[pc] << 8 | memory[pc + 1]);
+            OpCodeLog.Add($"0x:{opcode.ToString("X4")} == 0x:{(opcode & 0xF000).ToString("X4")}");
 
             // Process opcode
             switch (opcode & 0xF000)
@@ -410,14 +413,10 @@ namespace DOTNET_CHIP_8
             Console.WriteLine("Fontset loaded into memory header.");
         }
 
-        void CPUNull()
-        {
-            //nothing
-        }
-
         public void PressButton(ushort _key)
         {
             key[_key] = 1;
+            //keypress = true;
         }
 
         public void UnpressButton(ushort _key)
