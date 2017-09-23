@@ -15,6 +15,8 @@ namespace DOTNET_CHIP_8
         DispatcherTimer gfxClock = null;
         DispatcherTimer cpuClock = null;
 
+        string[] Bindings = new string[16];
+
         public MainWindow()
         {
             InitializeComponent();
@@ -161,6 +163,8 @@ namespace DOTNET_CHIP_8
             int pxsize = Int32.Parse(config.Read("PixelSize", "DOTRenderer"));
             Renderer.size = pxsize;
             Console.WriteLine($"DOTRenderer: Pixel size = {Renderer.size}");
+
+
         }
     }
 }

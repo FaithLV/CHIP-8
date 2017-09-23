@@ -388,9 +388,9 @@ namespace DOTNET_CHIP_8
             }
         }
 
+        Random rr = new Random();
         private ushort Random()
         {
-            Random rr = new Random();
             ushort random = (ushort)rr.Next(0, 255);
             return random;
         }
