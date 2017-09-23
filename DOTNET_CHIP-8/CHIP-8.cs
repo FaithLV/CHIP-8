@@ -390,7 +390,9 @@ namespace DOTNET_CHIP_8
 
         private ushort Random()
         {
-            return 0;
+            Random rr = new Random();
+            ushort random = (ushort)rr.Next(0, 255);
+            return random;
         }
 
 
