@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -8,11 +9,17 @@ namespace DOTNET_CHIP_8
     public class DotRenderer
     {
         Rectangle[] Pixels = new Rectangle[2048];
+        Stopwatch frametimer = new Stopwatch();
+
+        public delegate void FrameRenderedEventHandler(object sender, EventArgs args);
+        public event FrameRenderedEventHandler FrameRendered;
 
         int width = 64;
         int height = 32;
         public int check = 0;
         public int size = 10;
+
+        public long FrameTime;
 
         Brush PixelON = new SolidColorBrush(Colors.White);
         Brush PixelOFF = new SolidColorBrush(Colors.Black);
@@ -27,6 +34,8 @@ namespace DOTNET_CHIP_8
 
         public void RenderPixels(byte[] buffer)
         {
+            frametimer.Start();
+
             for(int i = 0; i < Pixels.Length; i++)
             {
                 if(buffer[i] == 1)
@@ -38,6 +47,11 @@ namespace DOTNET_CHIP_8
                     Pixels[i].Fill = PixelOFF;
                 }
             }
+
+            frametimer.Stop();
+            FrameTime = frametimer.ElapsedMilliseconds;
+            frametimer.Reset();
+            OnFrameRendered();
         }
 
         public Grid RenderPort(int px_size)
@@ -86,6 +100,11 @@ namespace DOTNET_CHIP_8
             px.Width = size;
             px.Height = size;
             return px;
+        }
+
+        protected virtual void OnFrameRendered()
+        {
+            FrameRendered?.Invoke(this, EventArgs.Empty);
         }
     }
 }

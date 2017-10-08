@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -401,8 +402,18 @@ namespace DOTNET_CHIP_8
             if (delay_timer > 0)
                 delay_timer--;
 
-            if (sound_timer > 0)
+            if (sound_timer != 0)
+            {
+                Beep();
                 sound_timer--;
+            }
+                
+        }
+
+        System.Media.SoundPlayer BeepSound = new System.Media.SoundPlayer(@"beep.wav");
+        private void Beep()
+        {
+            BeepSound.Play();
         }
 
         private void LoadFonts()
@@ -418,12 +429,13 @@ namespace DOTNET_CHIP_8
         public void PressButton(ushort _key)
         {
             key[_key] = 1;
-            //keypress = true;
+            keypress = true;
         }
 
         public void UnpressButton(ushort _key)
         {
             key[_key] = 0;
+            //keypress = false;
         }
 
 

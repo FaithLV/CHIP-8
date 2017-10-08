@@ -33,11 +33,18 @@ namespace DOTNET_CHIP_8
             cpuClock.Interval = TimeSpan.FromMilliseconds(1.851851851851852);
             cpuClock.Tick += CPUCycle;
 
+            Renderer.FrameRendered += DotRenderer_FrameRendered;
+
             Dispatcher.Invoke(new Action(() => EmuGrid.Children.Add(Renderer.RenderPort(5))));
             Console.WriteLine($"Pixel buffer size: {Renderer.check}");
 
             ReadConfiguration();
 
+        }
+
+        private void DotRenderer_FrameRendered(object sender, EventArgs args)
+        {
+            FrameTimerDisplay.Text = $"{Renderer.FrameTime}ms";
         }
 
         private void Window_Drop(object sender, DragEventArgs e)
@@ -133,6 +140,7 @@ namespace DOTNET_CHIP_8
 
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+
         }
 
         private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
