@@ -174,5 +174,10 @@ namespace DOTNET_CHIP_8
 
 
         }
+
+        private void TestRenderer_Button(object sender, RoutedEventArgs e)
+        {
+            Renderer.TestFillPixels();
+        }
     }
 }

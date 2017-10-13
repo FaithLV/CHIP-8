@@ -23,6 +23,7 @@ namespace DOTNET_CHIP_8
 
         Brush PixelON = new SolidColorBrush(Colors.White);
         Brush PixelOFF = new SolidColorBrush(Colors.Black);
+        Brush RedPixel = new SolidColorBrush(Colors.Red);
 
         public DotRenderer()
         {
@@ -105,6 +106,14 @@ namespace DOTNET_CHIP_8
         protected virtual void OnFrameRendered()
         {
             FrameRendered?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void TestFillPixels()
+        {
+            for(int i = 0; i < Pixels.Length; i++)
+            {
+                Pixels[i].Fill = RedPixel;
+            }
         }
     }
 }

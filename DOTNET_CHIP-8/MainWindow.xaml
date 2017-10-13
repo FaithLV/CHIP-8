@@ -12,8 +12,12 @@
     <Grid x:Name="EmuGrid">
         <Rectangle x:Name="CPU_Marker" Visibility="Hidden" Fill="Green" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Rectangle x:Name="GPU_Marker" Visibility="Hidden" Fill="Red" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25"/>
-        <Button Width="100" Height="25" Content="Dump GFX Buffer" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5,5" Click="DumpGFXBuffer_Button"/>
-        <Button Width="120" Height="25" Content="Dump OpCode Log" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="125,5" Click="DumpOpCodes_Button"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Width="100" Height="25" Margin="0,0,15,0" Content="Dump GFX Buffer" Click="DumpGFXBuffer_Button"/>
+            <Button Width="100" Height="25" Margin="0,0,15,0" Content="Test Renderer" Click="TestRenderer_Button"/>
+            <Button Width="120" Height="25" Content="Dump OpCode Log" Click="DumpOpCodes_Button"/>
+        </StackPanel>
+        
         <TextBlock x:Name="FrameTimerDisplay" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>
