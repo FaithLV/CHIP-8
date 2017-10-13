@@ -65,8 +65,6 @@ namespace DOTNET_CHIP_8
                 port.Children.Add(px);
             }
 
-            Console.WriteLine($"Added {width * height} pixels to renderport.");
-
             return port;
         }
 
@@ -83,17 +81,19 @@ namespace DOTNET_CHIP_8
                 HorizontalAlignment = HorizontalAlignment.Left
             };
 
-            if (i % 64 == 0)
+            if (i % width == 0 && i != 0)
             {
-                yi = i / 64;
+                yi = i / width;
+                Console.WriteLine($"Switching to row {yi} with pixel {i}");
             }
 
-            if (xi < 63)
+            if (xi < width-1)
             {
                 xi++;
             }
             else
             {
+                Console.WriteLine($"Switching xi with pixel {i}");
                 xi = 0;
             }
 
