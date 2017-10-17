@@ -91,8 +91,6 @@ namespace DOTNET_CHIP_8
         //DEBUG
         private void SwitchGPU()
         {
-            return;
-
             if (GPU_Marker.Visibility == Visibility.Hidden)
             {
                 Dispatcher.Invoke(new Action(() => GPU_Marker.Visibility = Visibility.Visible));
@@ -105,8 +103,6 @@ namespace DOTNET_CHIP_8
 
         private void SwitchCPU()
         {
-            return;
-
             if (CPU_Marker.Visibility == Visibility.Hidden)
             {
                 Dispatcher.Invoke(new Action(() => CPU_Marker.Visibility = Visibility.Visible));
