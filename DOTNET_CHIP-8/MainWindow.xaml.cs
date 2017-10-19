@@ -69,15 +69,12 @@ namespace DOTNET_CHIP_8
         //CPU Timer tick
         private void CPUCycle(object sender, EventArgs e)
         {
-            SwitchCPU();
             CPUCore.EmulateCycle();
         }
 
         //GFX Timer tick
         private void GFX_Tick(object sender, EventArgs e)
         {
-            SwitchGPU();
-
             byte[] gfxarray = CPUCore.gfx;
             DrawGFXBuffer(gfxarray);
         }
@@ -174,6 +171,11 @@ namespace DOTNET_CHIP_8
         private void TestRenderer_Button(object sender, RoutedEventArgs e)
         {
             Renderer.TestFillPixels();
+        }
+
+        private void SlowGFXBuffer_Button(object sender, RoutedEventArgs e)
+        {
+            Renderer.SlowFillPixels();
         }
     }
 }

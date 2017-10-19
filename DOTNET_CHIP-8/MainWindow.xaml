@@ -14,8 +14,9 @@
         <Rectangle x:Name="GPU_Marker" Visibility="Hidden" Fill="Red" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Button Width="100" Height="25" Margin="0,0,15,0" Content="Dump GFX Buffer" Click="DumpGFXBuffer_Button"/>
-            <Button Width="100" Height="25" Margin="0,0,15,0" Content="Test Renderer" Click="TestRenderer_Button"/>
-            <Button Width="120" Height="25" Content="Dump OpCode Log" Click="DumpOpCodes_Button"/>
+            <Button Width="140" Height="25" Margin="0,0,15,0" Content="Randomize GFX Buffer" Click="TestRenderer_Button"/>
+            <Button Width="120" Height="25" Margin="0,0,15,0" Content="Dump OpCode Log" Click="DumpOpCodes_Button"/>
+            <Button Width="100" Height="25" Content="slow fill gfx buffer" Click="SlowGFXBuffer_Button"/>
         </StackPanel>
         
         <TextBlock x:Name="FrameTimerDisplay" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace DOTNET_CHIP_8
 {
@@ -15,8 +17,8 @@ namespace DOTNET_CHIP_8
         public delegate void FrameRenderedEventHandler(object sender, EventArgs args);
         public event FrameRenderedEventHandler FrameRendered;
 
-        int width = 64;
-        int height = 32;
+        float width = 64;
+        float height = 32;
         public int check = 0;
         public int size = 10;
 
@@ -69,23 +71,27 @@ namespace DOTNET_CHIP_8
         }
 
 
-        int yi = 0;
-        int xi = 0;
-        private UIElement Pixel(int i)
+        float yi = 0;
+        float xi = 0;
+        private UIElement Pixel(float i)
         {
             check++;
 
             Rectangle px = new Rectangle
             {
                 VerticalAlignment = VerticalAlignment.Top,
-                HorizontalAlignment = HorizontalAlignment.Left
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Width = size,
+                Height = size
             };
 
             if (i % width == 0 && i != 0)
             {
                 yi = i / width;
-                Console.WriteLine($"Switching to row {yi} with pixel {i}");
             }
+
+            px.Margin = new Thickness(size * xi, yi * size, 0, 0);
+            Console.WriteLine($"{i} : {size * xi} . {size * yi}");
 
             if (xi < width-1)
             {
@@ -93,14 +99,9 @@ namespace DOTNET_CHIP_8
             }
             else
             {
-                Console.WriteLine($"Switching xi with pixel {i}");
                 xi = 0;
             }
 
-            px.Margin = new Thickness(size * xi, yi * size, 0, 0);
-
-            px.Width = size;
-            px.Height = size;
             return px;
         }
 
@@ -115,6 +116,36 @@ namespace DOTNET_CHIP_8
             {
                 Pixels[i].Fill = RedPixel;
             }
+        }
+
+        int _fillindex = 0;
+        Random rand = new Random();
+        byte _r;
+        byte _g;
+        byte _b;
+
+        public void SlowFillPixels()
+        {
+            DispatcherTimer _t = new DispatcherTimer();
+            _t.Interval = TimeSpan.FromMilliseconds(50);
+            _t.Tick += FillPixel;
+            _t.Start();
+        }
+
+        private void FillPixel(object sender, EventArgs e)
+        {
+            if(_fillindex < Pixels.Length)
+            {
+
+                _r = (byte)rand.Next(0, 255);
+                _g = (byte)rand.Next(0, 255);
+                _b = (byte)rand.Next(0, 255);
+
+                Pixels[_fillindex].Fill = new SolidColorBrush(Color.FromRgb(_r, _g, _b));
+
+                _fillindex++;
+            }
+            
         }
     }
 }
