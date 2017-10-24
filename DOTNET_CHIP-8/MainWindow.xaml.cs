@@ -165,7 +165,6 @@ namespace DOTNET_CHIP_8
             Renderer.size = pxsize;
             Console.WriteLine($"DOTRenderer: Pixel size = {Renderer.size}");
 
-
         }
 
         private void TestRenderer_Button(object sender, RoutedEventArgs e)
