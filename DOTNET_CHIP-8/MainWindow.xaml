@@ -9,9 +9,13 @@
         Height="500" Width="720"
         AllowDrop="True"
         Drop="Window_Drop" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
-    <Grid x:Name="EmuGrid">
-        
-        <DockPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel VerticalAlignment="Top">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="GFX Debug">
                     <MenuItem Header="Dump Raw GFX Buffer" Click="DumpGFXBuffer_Button"/>
@@ -23,10 +27,12 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        
-        <Rectangle x:Name="CPU_Marker" Visibility="Hidden" Fill="Green" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Rectangle x:Name="GPU_Marker" Visibility="Hidden" Fill="Red" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25"/>
 
-        <TextBlock x:Name="FrameTimerDisplay" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <Grid x:Name="RenderPort" Grid.Row="1" />
+
+        <Rectangle x:Name="CPU_Marker" Grid.Row="1" Visibility="Hidden" Fill="Green" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Rectangle x:Name="GPU_Marker" Grid.Row="1" Visibility="Hidden" Fill="Red" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25"/>
+
+        <TextBlock x:Name="FrameTimerDisplay" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

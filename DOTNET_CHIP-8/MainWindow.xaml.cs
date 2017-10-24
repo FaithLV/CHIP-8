@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace DOTNET_CHIP_8
 {
@@ -35,7 +36,9 @@ namespace DOTNET_CHIP_8
 
             Renderer.FrameRendered += DotRenderer_FrameRendered;
 
-            Dispatcher.Invoke(new Action(() => EmuGrid.Children.Add(Renderer.RenderPort(5))));
+            //Dispatcher.Invoke(new Action(() => EmuGrid.Children.Add(Renderer.RenderPort(5))));
+            Dispatcher.Invoke(new Action(() => RenderPort.Children.Add(Renderer.RenderPort(5))));
+
             Console.WriteLine($"Pixel buffer size: {Renderer.check}");
 
             ReadConfiguration();
@@ -138,6 +141,7 @@ namespace DOTNET_CHIP_8
 
         private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
+
         }
 
         private void DumpOpCodes_Button(object sender, RoutedEventArgs e)
