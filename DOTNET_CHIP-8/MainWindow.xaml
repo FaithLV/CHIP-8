@@ -17,6 +17,10 @@
 
         <DockPanel VerticalAlignment="Top">
             <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Emulator">
+                    <MenuItem Header="Load Game" Click="LoadROM_Button" />
+                </MenuItem>
+                
                 <MenuItem Header="GFX Debug">
                     <MenuItem Header="Dump Raw GFX Buffer" Click="DumpGFXBuffer_Button"/>
                     <MenuItem Header="Test Renderer bounds" Click="TestRenderer_Button"/>

@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Xml;
 using System.Linq;
+using Ookii.Dialogs.Wpf;
 
 namespace DOTNET_CHIP_8
 {
@@ -80,6 +81,22 @@ namespace DOTNET_CHIP_8
         private void SlowGFXBuffer_Button(object sender, RoutedEventArgs e)
         {
             Renderer.SlowFillPixels();
+        }
+
+        private void LoadROM_Button(object sender, RoutedEventArgs e)
+        {
+            VistaOpenFileDialog romDialog = new VistaOpenFileDialog();
+            romDialog.Title = "Navigate to game file!";
+            byte[] gameBuffer = null;
+
+            if(romDialog.ShowDialog().Value == true)
+            {
+                gameBuffer = File.ReadAllBytes(romDialog.FileName);
+            }
+
+            LoadNewGame(gameBuffer);
+
+
         }
 
 
@@ -321,5 +338,7 @@ namespace DOTNET_CHIP_8
             }
 
         }
+
+       
     }
 }
