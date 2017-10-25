@@ -125,6 +125,7 @@ namespace DOTNET_CHIP_8
         {
             gfxClock = new DispatcherTimer();
             gfxClock.Interval = TimeSpan.FromMilliseconds(16.67);
+            //gfxClock.Interval = TimeSpan.FromMilliseconds(0);
             gfxClock.Tick += GFX_Tick;
 
             Dispatcher.Invoke(new Action(() => RenderPort.Children.Add(Renderer.RenderPort(5))));
@@ -135,7 +136,8 @@ namespace DOTNET_CHIP_8
         private void InitializeCPUClock()
         {
             cpuClock = new DispatcherTimer();
-            cpuClock.Interval = TimeSpan.FromMilliseconds(1.851851851851852);
+            //cpuClock.Interval = TimeSpan.FromMilliseconds(1.851851851851852);
+            cpuClock.Interval = TimeSpan.FromMilliseconds(0.5);
             cpuClock.Tick += CPUCycle;
         }
 
@@ -203,9 +205,13 @@ namespace DOTNET_CHIP_8
         {
             IniFile config = new IniFile("emuconfig.ini");
 
-            double freq = Double.Parse(config.Read("Frequency", "CPUCore"));
-            Console.WriteLine($"CPU Frequency: {freq}Hz");
-            cpuClock.Interval = TimeSpan.FromMilliseconds(1000/freq);
+            double speed = Double.Parse(config.Read("Interval", "CPUCore"));
+            Console.WriteLine($"CPU Clock Interval: cycle per {speed}ms ");
+            cpuClock.Interval = TimeSpan.FromMilliseconds(speed);
+
+            double gfx_speed = Double.Parse(config.Read("Interval", "GFX"));
+            Console.WriteLine($"GFX Buffer will be drawn every {gfx_speed}ms");
+            gfxClock.Interval = TimeSpan.FromMilliseconds(gfx_speed);
 
             int pxsize = Int32.Parse(config.Read("PixelSize", "DOTRenderer"));
             Renderer.size = pxsize;

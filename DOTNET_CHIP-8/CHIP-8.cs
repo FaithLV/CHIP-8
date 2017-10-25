@@ -435,7 +435,7 @@ namespace DOTNET_CHIP_8
         public void UnpressButton(ushort _key)
         {
             key[_key] = 0;
-            keypress = false;
+            //keypress = false;
         }
 
 
