@@ -92,11 +92,8 @@ namespace DOTNET_CHIP_8
             if(romDialog.ShowDialog().Value == true)
             {
                 gameBuffer = File.ReadAllBytes(romDialog.FileName);
+                LoadNewGame(gameBuffer);
             }
-
-            LoadNewGame(gameBuffer);
-
-
         }
 
 
