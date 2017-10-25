@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<KeyMappings>
+  <Bind keyboard="A" console="0"/>
+  <Bind keyboard="S" console="1"/>
+  <Bind keyboard="D" console="2"/>
+  <Bind keyboard="F" console="3"/>
+  <Bind keyboard="G" console="4"/>
+  <Bind keyboard="H" console="5"/>
+  <Bind keyboard="J" console="6"/>
+  <Bind keyboard="K" console="7"/>
+  <Bind keyboard="L" console="8"/>
+  <Bind keyboard="Z" console="9"/>
+  <Bind keyboard="X" console="10"/>
+  <Bind keyboard="C" console="11"/>
+  <Bind keyboard="V" console="12"/>
+  <Bind keyboard="B" console="13"/>
+  <Bind keyboard="N" console="14"/>
+  <Bind keyboard="M" console="15"/>
+</KeyMappings>

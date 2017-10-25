@@ -8,7 +8,7 @@
         Title="CHIP-8 Emulator"
         Height="500" Width="720"
         AllowDrop="True"
-        Drop="Window_Drop" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+        Drop="Window_Drop">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
