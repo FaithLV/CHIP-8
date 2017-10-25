@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <KeyMappings>
-  <Bind keyboard="A" console="0"/>
-  <Bind keyboard="S" console="1"/>
-  <Bind keyboard="D" console="2"/>
-  <Bind keyboard="F" console="3"/>
-  <Bind keyboard="G" console="4"/>
-  <Bind keyboard="H" console="5"/>
-  <Bind keyboard="J" console="6"/>
-  <Bind keyboard="K" console="7"/>
-  <Bind keyboard="L" console="8"/>
-  <Bind keyboard="Z" console="9"/>
-  <Bind keyboard="X" console="10"/>
-  <Bind keyboard="C" console="11"/>
-  <Bind keyboard="V" console="12"/>
-  <Bind keyboard="B" console="13"/>
-  <Bind keyboard="N" console="14"/>
-  <Bind keyboard="M" console="15"/>
+  <Bind keyboard="1" console="0"/>
+  <Bind keyboard="2" console="1"/>
+  <Bind keyboard="3" console="2"/>
+  <Bind keyboard="4" console="3"/>
+  <Bind keyboard="Q" console="4"/>
+  <Bind keyboard="W" console="5"/>
+  <Bind keyboard="E" console="6"/>
+  <Bind keyboard="R" console="7"/>
+  <Bind keyboard="A" console="8"/>
+  <Bind keyboard="S" console="9"/>
+  <Bind keyboard="D" console="10"/>
+  <Bind keyboard="F" console="11"/>
+  <Bind keyboard="Z" console="12"/>
+  <Bind keyboard="X" console="13"/>
+  <Bind keyboard="C" console="14"/>
+  <Bind keyboard="V" console="15"/>
 </KeyMappings>
