@@ -95,6 +95,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SaveStateManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -166,7 +167,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\VirtualKeys.xml" "$(TargetDir)\data\" /S /Y
-XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\KeyMappings.xml" "$(TargetDir)\data\" /S /Y
-XCOPY "$(SolutionDir)DOTNET_CHIP-8\emuconfig.ini" "$(TargetDir)\" /S /Y</PreBuildEvent>
+XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\KeyMappings.xml" "$(TargetDir)\data\" /S /Y</PreBuildEvent>
   </PropertyGroup>
 </Project>
