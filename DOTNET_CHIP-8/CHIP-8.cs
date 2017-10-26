@@ -14,8 +14,8 @@ namespace DOTNET_CHIP_8
     class CHIP_8
     {
         //VM Specifications
-        byte[] memory = new byte[4096];
-        byte[] cpu_V = new byte[16];
+        public byte[] memory = new byte[4096];
+        public byte[] cpu_V = new byte[16];
         public byte[] gfx = new byte[64*32]; //gfx buffer
         ushort[] key = new ushort[16];
 
@@ -41,17 +41,17 @@ namespace DOTNET_CHIP_8
         //two ("timers") registers count at 60hz
         //when set over 0, they will count down to 0
         DispatcherTimer TimerClock = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(16.666666666667) };
-        ushort delay_timer = 0;
-        ushort sound_timer = 0;
+        public ushort delay_timer = 0;
+        public ushort sound_timer = 0;
 
         //CHIP-8 has 35 opcodes and two index registers
-        ushort opcode = 0;
-        ushort I = 0;
-        ushort pc = 0x200; //program counter
+        public ushort opcode = 0;
+        public ushort I = 0;
+        public ushort pc = 0x200; //program counter
 
         //Stack Interpreter
-        ushort[] stack = new ushort[16];
-        ushort stackPtr = 0;
+        public ushort[] stack = new ushort[16];
+        public ushort stackPtr = 0;
 
         public List<string> OpCodeLog = new List<string>();
 

@@ -96,7 +96,6 @@ namespace DOTNET_CHIP_8
             }
         }
 
-
         private void DumpGFXBuffer_Button(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("-----------------------RAW GFX Buffer:");
@@ -119,6 +118,67 @@ namespace DOTNET_CHIP_8
             }
             writer.Close();
             Console.WriteLine($"Written {log.Count} entries to OPCode log");
+        }
+
+        private void SaveState_Button(object sender, RoutedEventArgs e)
+        {
+            byte[] memoryDump = CPUCore.memory;
+            byte[] graphicsBuffer = CPUCore.gfx;
+            byte[] cpuvDump = CPUCore.cpu_V;
+            ushort delay_timer = CPUCore.delay_timer;
+            ushort sound_timer = CPUCore.sound_timer;
+            ushort OPCode = CPUCore.opcode;
+            ushort CPU_I = CPUCore.I;
+            ushort ProgramCounter = CPUCore.pc;
+            ushort[] stack = CPUCore.stack;
+            ushort stackPtr = CPUCore.stackPtr;
+
+            uint romsize = CPUCore.romSize;
+
+            using (StreamWriter writer = new StreamWriter($"{AppDomain.CurrentDomain.BaseDirectory}\\savestate.mem"))
+            {
+                for(int i = 0; i < memoryDump.Length; i++)
+                {
+                    writer.Write(memoryDump[i]);
+                }
+
+                writer.WriteLine();
+
+                for(int i = 0; i < graphicsBuffer.Length; i++)
+                {
+                    writer.Write(graphicsBuffer[i]);
+                }
+
+                writer.WriteLine();
+
+                for(int i = 0; i < cpuvDump.Length; i++)
+                {
+                    writer.Write(cpuvDump[i]);
+                }
+
+                writer.WriteLine(delay_timer);
+                writer.WriteLine(sound_timer);
+
+                writer.WriteLine(OPCode);
+                writer.WriteLine(CPU_I);
+                writer.WriteLine(ProgramCounter);
+
+                for(int i = 0; i < stack.Length; i++)
+                {
+                    writer.Write(stack[i]);
+                }
+
+                writer.WriteLine(stackPtr);
+                writer.WriteLine(romsize);
+
+            }
+
+
+        }
+
+        private void LoadState_Button(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void DotRenderer_FrameRendered(object sender, EventArgs args)
@@ -335,7 +395,5 @@ namespace DOTNET_CHIP_8
             }
 
         }
-
-       
     }
 }
