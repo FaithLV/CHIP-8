@@ -413,7 +413,15 @@ namespace DOTNET_CHIP_8
         System.Media.SoundPlayer BeepSound = new System.Media.SoundPlayer(@"beep.wav");
         private void Beep()
         {
-            BeepSound.Play();
+            try
+            {
+                BeepSound.Play();
+            }
+            catch
+            {
+                Console.WriteLine("Failed to play the BOOP!");
+            }
+            
         }
 
         private void LoadFonts()
