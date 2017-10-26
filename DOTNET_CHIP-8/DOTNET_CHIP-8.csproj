@@ -131,6 +131,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="emuconfig.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -163,6 +166,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\VirtualKeys.xml" "$(TargetDir)\data\" /S /Y
-XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\KeyMappings.xml" "$(TargetDir)\data\" /S /Y</PreBuildEvent>
+XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\KeyMappings.xml" "$(TargetDir)\data\" /S /Y
+XCOPY "$(SolutionDir)DOTNET_CHIP-8\emuconfig.ini" "$(TargetDir)\" /S /Y</PreBuildEvent>
   </PropertyGroup>
 </Project>
