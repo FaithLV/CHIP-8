@@ -18,20 +18,24 @@ namespace DOTNET_CHIP_8
 
         public void SaveAState(string _name)
         {
-            //byte[] memoryDump = CPUCore.memory;
-            //byte[] graphicsBuffer = CPUCore.gfx;
-            //byte[] cpuvDump = CPUCore.cpu_V;
-            //ushort delay_timer = CPUCore.delay_timer;
-            //ushort sound_timer = CPUCore.sound_timer;
-            //ushort OPCode = CPUCore.opcode;
-            //ushort CPU_I = CPUCore.I;
-            //ushort ProgramCounter = CPUCore.pc;
-            //ushort[] stack = CPUCore.stack;
-            //ushort stackPtr = CPUCore.stackPtr;
-            //uint romsize = CPUCore.romSize;
+            using(StreamWriter writer = new StreamWriter($"{AppDomain.CurrentDomain.BaseDirectory}//{_name}.mem"))
+            {
+                writer.WriteLine(DataDump(CPUCore.memory));
+                writer.WriteLine(DataDump(CPUCore.gfx));
+                writer.WriteLine(DataDump(CPUCore.cpu_V));
+                writer.WriteLine(DataDump(CPUCore.delay_timer));
+                writer.WriteLine(DataDump(CPUCore.sound_timer));
+                writer.WriteLine(DataDump(CPUCore.opcode));
+                writer.WriteLine(DataDump(CPUCore.I));
+                writer.WriteLine(DataDump(CPUCore.pc));
+                writer.WriteLine(DataDump(CPUCore.stack));
+                writer.WriteLine(DataDump(CPUCore.stackPtr));
+                writer.WriteLine(DataDump(CPUCore.romSize));
+            }
         }
 
-        internal string DataDump<T>(string name, T data)
+        //Return raw data values from CPU as strings
+        internal string DataDump<T>(T data)
         {
             string _databuffer = null;
 
