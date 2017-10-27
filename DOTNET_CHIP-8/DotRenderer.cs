@@ -20,7 +20,7 @@ namespace DOTNET_CHIP_8
         float width = 64;
         float height = 32;
         public int check = 0;
-        public int size = 10;
+        public int size = 15;
 
         public long FrameTime;
 
@@ -91,7 +91,6 @@ namespace DOTNET_CHIP_8
             }
 
             px.Margin = new Thickness(size * xi, yi * size, 0, 0);
-            Console.WriteLine($"{i} : {size * xi} . {size * yi}");
 
             if (xi < width-1)
             {

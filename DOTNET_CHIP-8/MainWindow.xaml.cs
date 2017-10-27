@@ -245,10 +245,6 @@ namespace DOTNET_CHIP_8
             Console.WriteLine($"GFX Buffer will be drawn every {gfx_speed}ms");
             gfxClock.Interval = TimeSpan.FromMilliseconds(gfx_speed);
 
-            int pxsize = Int32.Parse(config.Read("PixelSize", "DOTRenderer"));
-            Renderer.size = pxsize;
-            Console.WriteLine($"DOTRenderer: Pixel size = {Renderer.size}");
-
         }
 
         private void CreateKeyArrays()
