@@ -19,7 +19,7 @@ namespace DOTNET_CHIP_8
 
         public void SaveAState(string _name)
         {
-            string file = $"{statefolder}//{_name}.mem";
+            string file = $"{statefolder}\\{_name}.mem";
 
             Directory.CreateDirectory(statefolder);
             if(File.Exists(file))
@@ -48,11 +48,11 @@ namespace DOTNET_CHIP_8
 
         public void LoadAState(string _name)
         {
-            string file = $"{statefolder}//{_name}.mem";
+            string file = $"{statefolder}\\{_name}.mem";
 
-            if(File.Exists(file))
+            if(!File.Exists(file))
             {
-                Console.WriteLine($"Save state {_name}.mem not found!");
+                Console.WriteLine($"Save state {file} not found!");
                 return;
             }
 
@@ -60,7 +60,9 @@ namespace DOTNET_CHIP_8
 
             using (StreamReader reader = new StreamReader(file))
             {
-                
+                Console.WriteLine(reader.ReadLine());
+                Console.WriteLine(reader.ReadLine());
+                Console.WriteLine(reader.ReadLine());
             }
 
             CPUCore.isPaused = false;

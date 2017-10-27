@@ -18,6 +18,7 @@ namespace DOTNET_CHIP_8
     {
         CHIP_8 CPUCore = null;
         DotRenderer Renderer = new DotRenderer();
+        SaveStateManager StateManager = null;
         DispatcherTimer gfxClock = null;
         DispatcherTimer cpuClock = null;
 
@@ -41,6 +42,8 @@ namespace DOTNET_CHIP_8
 
             InitializeGFXClock();
             Console.WriteLine($"Pixel buffer size: {Renderer.check}");
+
+            StateManager = new SaveStateManager(CPUCore);
 
             ReadConfiguration();
 
@@ -122,13 +125,13 @@ namespace DOTNET_CHIP_8
 
         private void SaveState_Button(object sender, RoutedEventArgs e)
         {
-            SaveStateManager manager = new SaveStateManager(CPUCore);
-            manager.SaveAState("test");
+            
+            StateManager.SaveAState("test");
         }
 
         private void LoadState_Button(object sender, RoutedEventArgs e)
         {
-
+            StateManager.LoadAState("test");
         }
 
         private void DotRenderer_FrameRendered(object sender, EventArgs args)
