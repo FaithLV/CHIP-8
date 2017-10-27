@@ -70,7 +70,6 @@ namespace DOTNET_CHIP_8
             return port;
         }
 
-
         float yi = 0;
         float xi = 0;
         private UIElement Pixel(float i)
@@ -102,6 +101,36 @@ namespace DOTNET_CHIP_8
             }
 
             return px;
+        }
+
+        public void ResizePixels(int size)
+        {
+            float _xi = 0;
+            float _yi = 0;
+
+            for(int i = 0; i < Pixels.Length; i++)
+            {
+                Rectangle px = Pixels[i];
+                px.Width = size;
+                px.Height = size;
+
+                if (i % width == 0 && i != 0)
+                {
+                    _yi = i / width;
+                }
+
+                px.Margin = new Thickness(size * _xi, _yi * size, 0, 0);
+
+                if (_xi < width - 1)
+                {
+                    _xi++;
+                }
+                else
+                {
+                    xi = 0;
+                }
+
+            }
         }
 
         protected virtual void OnFrameRendered()
