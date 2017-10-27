@@ -10,6 +10,7 @@ namespace DOTNET_CHIP_8
     class SaveStateManager
     {
         private CHIP_8 CPUCore;
+        private string statefolder = AppDomain.CurrentDomain.BaseDirectory + "savestates";
 
         public SaveStateManager(CHIP_8 chip)
         {
@@ -18,7 +19,16 @@ namespace DOTNET_CHIP_8
 
         public void SaveAState(string _name)
         {
-            using(StreamWriter writer = new StreamWriter($"{AppDomain.CurrentDomain.BaseDirectory}//{_name}.mem"))
+            string file = $"{statefolder}//{_name}.mem";
+
+            Directory.CreateDirectory(statefolder);
+            if(File.Exists(file))
+            {
+                Console.WriteLine($"Overwriting savestate {_name}");
+                File.Delete(file);
+            }
+ 
+            using(StreamWriter writer = new StreamWriter(file))
             {
                 writer.WriteLine(DataDump(CPUCore.memory));
                 writer.WriteLine(DataDump(CPUCore.gfx));
@@ -32,9 +42,28 @@ namespace DOTNET_CHIP_8
                 writer.WriteLine(DataDump(CPUCore.stackPtr));
                 writer.WriteLine(DataDump(CPUCore.romSize));
             }
+
+            Console.WriteLine($"State saved: {_name}.mem");
         }
 
-        //Return raw data values from CPU as strings
+        public void LoadAState(string _name)
+        {
+            string file = $"{statefolder}//{_name}.mem";
+
+            if(File.Exists(file))
+            {
+                Console.WriteLine($"Save state {_name}.mem not found!");
+                return;
+            }
+
+            using (StreamReader reader = new StreamReader(file))
+            {
+                
+            }
+
+        }
+
+        //Raw data
         internal string DataDump<T>(T data)
         {
             string _databuffer = null;
@@ -45,6 +74,7 @@ namespace DOTNET_CHIP_8
                 for(int i = 0; i < _d.Length; i++)
                 {
                     _databuffer += _d[i];
+                    _databuffer += " ";
                 }
             }
             else if(typeof(T) == typeof(ushort[]))
@@ -53,11 +83,12 @@ namespace DOTNET_CHIP_8
                 for(int i = 0; i < _d.Length; i++)
                 {
                     _databuffer += _d[i];
+                    _databuffer += " ";
                 }
             }
             else if (typeof(T) == typeof(ushort))
             {
-                _databuffer = data.ToString();
+                _databuffer = data.ToString();  
             }
             else if (typeof(T) == typeof(uint))
             {
