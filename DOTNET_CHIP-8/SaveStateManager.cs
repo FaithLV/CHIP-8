@@ -56,10 +56,14 @@ namespace DOTNET_CHIP_8
                 return;
             }
 
+            CPUCore.isPaused = true;
+
             using (StreamReader reader = new StreamReader(file))
             {
                 
             }
+
+            CPUCore.isPaused = false;
 
         }
 
