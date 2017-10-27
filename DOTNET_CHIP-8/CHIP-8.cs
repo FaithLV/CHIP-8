@@ -91,7 +91,6 @@ namespace DOTNET_CHIP_8
         {
             if (!isPaused)
             {
-
                 opcode = (ushort)(memory[pc] << 8 | memory[pc + 1]);
                 OpCodeLog.Add($"0x:{opcode.ToString("X4")} == 0x:{(opcode & 0xF000).ToString("X4")}");
 
@@ -450,11 +449,6 @@ namespace DOTNET_CHIP_8
         {
             key[_key] = 0;
             //keypress = false;
-        }
-
-        public void Pause()
-        {
-            
         }
 
     }

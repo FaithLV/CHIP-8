@@ -19,6 +19,7 @@
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="Emulator">
                     <MenuItem Header="Load Game" Click="LoadROM_Button" />
+                    <MenuItem Header="Pause" IsCheckable="True" IsChecked="False" Click="Menu_Pause_Click"/>
                     <Separator/>
                     <MenuItem Header="Save State" Click="SaveState_Button"/>
                     <MenuItem Header="Load State" Click="LoadState_Button"/>

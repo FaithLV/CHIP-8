@@ -134,6 +134,11 @@ namespace DOTNET_CHIP_8
             StateManager.LoadAState("test");
         }
 
+        private void Menu_Pause_Click(object sender, RoutedEventArgs e)
+        {
+            CPUCore.isPaused = !CPUCore.isPaused;
+        }
+
         private void DotRenderer_FrameRendered(object sender, EventArgs args)
         {
             FrameTimerDisplay.Text = $"{Renderer.FrameTime}ms";
