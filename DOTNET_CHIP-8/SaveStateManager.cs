@@ -60,9 +60,17 @@ namespace DOTNET_CHIP_8
 
             using (StreamReader reader = new StreamReader(file))
             {
-                Console.WriteLine(reader.ReadLine());
-                Console.WriteLine(reader.ReadLine());
-                Console.WriteLine(reader.ReadLine());
+                CPUCore.memory = StringToByte(reader.ReadLine().Split(' '));
+                CPUCore.gfx = StringToByte(reader.ReadLine().Split(' '));
+                CPUCore.cpu_V = StringToByte(reader.ReadLine().Split(' '));
+                CPUCore.delay_timer = ushort.Parse(reader.ReadLine());
+                CPUCore.sound_timer = ushort.Parse(reader.ReadLine());
+                CPUCore.opcode = ushort.Parse(reader.ReadLine());
+                CPUCore.I = ushort.Parse(reader.ReadLine());
+                CPUCore.pc = ushort.Parse(reader.ReadLine());
+                CPUCore.stack = StringToUShort(reader.ReadLine().Split(' '));
+                CPUCore.stackPtr = ushort.Parse(reader.ReadLine());
+                CPUCore.romSize = ushort.Parse(reader.ReadLine());
             }
 
             CPUCore.isPaused = false;
@@ -82,6 +90,7 @@ namespace DOTNET_CHIP_8
                     _databuffer += _d[i];
                     _databuffer += " ";
                 }
+                _databuffer = _databuffer.Substring(0, _databuffer.Length-1);
             }
             else if(typeof(T) == typeof(ushort[]))
             {
@@ -91,6 +100,7 @@ namespace DOTNET_CHIP_8
                     _databuffer += _d[i];
                     _databuffer += " ";
                 }
+                _databuffer = _databuffer.Substring(0, _databuffer.Length - 1);
             }
             else if (typeof(T) == typeof(ushort))
             {
@@ -106,6 +116,19 @@ namespace DOTNET_CHIP_8
             }
 
             return _databuffer;
+        }
+
+        //Parse string array to byte array
+        internal byte[] StringToByte(string[] input)
+        {
+            byte[] buffer = input.Select(s => Byte.Parse(s)).ToArray();
+            return buffer;
+        }
+
+        internal ushort[] StringToUShort(string[] input)
+        {
+            ushort[] buffer = input.Select(s => ushort.Parse(s)).ToArray();
+            return buffer;
         }
     }
 }
