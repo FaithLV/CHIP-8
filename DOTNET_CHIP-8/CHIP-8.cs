@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
@@ -60,6 +61,7 @@ namespace DOTNET_CHIP_8
         public uint romSize = 0;
 
         public bool isPaused = false;
+        
 
         //VM Initialization
         public CHIP_8()
@@ -394,6 +396,7 @@ namespace DOTNET_CHIP_8
                     Console.WriteLine("Unknown opcode: 0x%X\n", opcode);
                     break;
             }
+
         }
 
         Random rr = new Random();
