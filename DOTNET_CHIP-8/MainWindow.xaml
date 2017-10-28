@@ -21,8 +21,16 @@
                     <MenuItem Header="Load Game" Click="LoadROM_Button" />
                     <MenuItem Header="Pause" IsCheckable="True" IsChecked="False" Click="Menu_Pause_Click"/>
                     <Separator/>
-                    <MenuItem Header="Save State" Click="SaveState_Button"/>
-                    <MenuItem Header="Load State" Click="LoadState_Button"/>
+
+                    <MenuItem Header="Save State" x:Name="SaveStateTab">
+                        <MenuItem Header="New Savestate" Click="SaveNewState_Button" />
+                        <Separator />
+
+                    </MenuItem>
+
+                    <MenuItem Header="Load State" x:Name="LoadStateTab">
+                        
+                    </MenuItem>
                 </MenuItem>
                 
                 <MenuItem Header="GFX Debug">

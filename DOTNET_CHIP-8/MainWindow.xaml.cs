@@ -49,6 +49,8 @@ namespace DOTNET_CHIP_8
 
             InitializeKeyboardHook();
             InitializeInputDriver();
+
+            PopulateSaveStates();
         }
 
         //Window Stuff
@@ -123,15 +125,26 @@ namespace DOTNET_CHIP_8
             Console.WriteLine($"Written {log.Count} entries to OPCode log");
         }
 
-        private void SaveState_Button(object sender, RoutedEventArgs e)
+        private void SaveNewState_Button(object sender, RoutedEventArgs e)
         {
-            
-            StateManager.SaveAState("test");
-        }
+            uint counter = 1;
+            while(File.Exists($"{AppDomain.CurrentDomain.BaseDirectory}\\savestates\\State {counter}.mem"))
+            {
+                counter++;
+            }
 
-        private void LoadState_Button(object sender, RoutedEventArgs e)
-        {
-            StateManager.LoadAState("test");
+            StateManager.SaveAState($"State {counter}");
+
+            MenuItem Sitem = new MenuItem();
+            Sitem.Header = $"State {counter}";
+            Sitem.Click += SaveState_Click;
+            SaveStateTab.Items.Add(Sitem);
+
+            MenuItem Litem = new MenuItem();
+            Litem.Header = $"State {counter}";
+            Litem.Click += LoadState_Click;
+            LoadStateTab.Items.Add(Litem);
+
         }
 
         private void Menu_Pause_Click(object sender, RoutedEventArgs e)
@@ -147,6 +160,37 @@ namespace DOTNET_CHIP_8
         private void DotRenderer_FrameRendered(object sender, EventArgs args)
         {
             FrameTimerDisplay.Text = $"{Renderer.FrameTime}ms";
+        }
+
+        private void PopulateSaveStates()
+        {
+            foreach(string file in Directory.GetFiles($"{AppDomain.CurrentDomain.BaseDirectory}\\savestates\\"))
+            {
+                string _file = file.Replace($"{AppDomain.CurrentDomain.BaseDirectory}\\savestates\\", String.Empty);
+                _file = _file.Replace(".mem", String.Empty);
+
+                MenuItem Sitem = new MenuItem();
+                Sitem.Header = _file;
+                Sitem.Click += SaveState_Click;
+                SaveStateTab.Items.Add(Sitem);
+
+                MenuItem Litem = new MenuItem();
+                Litem.Header = _file;
+                Litem.Click += LoadState_Click;
+                LoadStateTab.Items.Add(Litem);
+            }
+        }
+
+        private void LoadState_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem obj = (MenuItem)sender;
+            StateManager.LoadAState(obj.Header.ToString());
+        }
+
+        private void SaveState_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem obj = (MenuItem)sender;
+            StateManager.SaveAState(obj.Header.ToString());
         }
 
         //Initializations
