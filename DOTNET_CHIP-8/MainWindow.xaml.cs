@@ -216,7 +216,6 @@ namespace DOTNET_CHIP_8
         private void InitializeCPUClock()
         {
             cpuClock = new DispatcherTimer();
-            //cpuClock.Interval = TimeSpan.FromMilliseconds(1.851851851851852);
             cpuClock.Interval = TimeSpan.FromMilliseconds(0.5);
             cpuClock.Tick += CPUCycle;
         }
