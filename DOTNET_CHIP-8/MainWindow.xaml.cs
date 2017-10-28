@@ -139,6 +139,11 @@ namespace DOTNET_CHIP_8
             CPUCore.isPaused = !CPUCore.isPaused;
         }
 
+        private void GFX_ResizePixels(object sender, RoutedEventArgs e)
+        {
+            Renderer.ResizePixels(15);
+        }
+
         private void DotRenderer_FrameRendered(object sender, EventArgs args)
         {
             FrameTimerDisplay.Text = $"{Renderer.FrameTime}ms";
