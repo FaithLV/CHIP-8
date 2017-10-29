@@ -30,6 +30,8 @@ namespace DOTNET_CHIP_8
         private static int[] KeyCodes;
         private static string[] KeyNames;
 
+        private int[] FlashFlags = new int[] { 0, 0 };
+
         public MainWindow()
         {
             InitializeComponent();
@@ -205,7 +207,7 @@ namespace DOTNET_CHIP_8
         private void InitializeGFXClock()
         {
             gfxClock = new DispatcherTimer();
-            //gfxClock.Interval = TimeSpan.FromMilliseconds(0);
+            gfxClock.Interval = TimeSpan.FromMilliseconds(16.67);
             gfxClock.Tick += GFX_Tick;
 
             Dispatcher.Invoke(new Action(() => RenderPort.Children.Add(Renderer.RenderPort(5))));
@@ -239,6 +241,7 @@ namespace DOTNET_CHIP_8
         //CPU Timer tick
         private void CPUCycle(object sender, EventArgs e)
         {
+            if (FlashFlags[0] == 1) { SwitchCPU(); }
             CPUCore.EmulateCycle();
         }
 
@@ -246,6 +249,7 @@ namespace DOTNET_CHIP_8
         private void GFX_Tick(object sender, EventArgs e)
         {
             byte[] gfxarray = CPUCore.gfx;
+            if (FlashFlags[1] == 1){ SwitchGPU(); }
             DrawGFXBuffer(gfxarray);
         }
 
@@ -287,6 +291,15 @@ namespace DOTNET_CHIP_8
             double speed = Double.Parse(config.Read("Interval", "CPUCore"));
             Console.WriteLine($"CPU Clock Interval: cycle per {speed}ms ");
             cpuClock.Interval = TimeSpan.FromMilliseconds(speed);
+
+            double gfxspeed = Double.Parse(config.Read("Interval", "GFX_XXX"));
+            Console.WriteLine($"GFX Clock Interval: frame per {speed}ms ");
+            gfxClock.Interval = TimeSpan.FromMilliseconds(speed);
+
+            FlashFlags[0] = Int32.Parse(config.Read("FlashCPUCycle", "DebugFlags"));
+            FlashFlags[1] = Int32.Parse(config.Read("FlashGPUCycle", "DebugFlags"));
+            Console.WriteLine($"FlashCPUCycle = {FlashFlags[0]}");
+            Console.WriteLine($"FlashCPUCycle = {FlashFlags[1]}");
         }
 
         private void CreateKeyArrays()
