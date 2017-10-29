@@ -15,13 +15,13 @@ namespace DOTNET_CHIP_8
         public SaveStateManager(CHIP_8 chip)
         {
             CPUCore = chip;
+            Directory.CreateDirectory(statefolder);
         }
 
         public void SaveAState(string _name)
         {
             string file = $"{statefolder}\\{_name}.mem";
 
-            Directory.CreateDirectory(statefolder);
             if(File.Exists(file))
             {
                 Console.WriteLine($"Overwriting savestate {_name}");
