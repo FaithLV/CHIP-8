@@ -205,7 +205,7 @@ namespace DOTNET_CHIP_8
         private void InitializeGFXClock()
         {
             gfxClock = new DispatcherTimer();
-            gfxClock.Interval = TimeSpan.FromMilliseconds(16.67);
+            //gfxClock.Interval = TimeSpan.FromMilliseconds(0);
             gfxClock.Tick += GFX_Tick;
 
             Dispatcher.Invoke(new Action(() => RenderPort.Children.Add(Renderer.RenderPort(5))));

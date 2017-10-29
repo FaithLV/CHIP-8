@@ -4,7 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DOTNET_CHIP_8"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         mc:Ignorable="d"
+        
         Title="CHIP-8 Emulator"
         Height="500" Width="720"
         AllowDrop="True"
@@ -12,25 +19,36 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <DockPanel VerticalAlignment="Top">
-            <Menu DockPanel.Dock="Top">
+            <Menu IsMainMenu="True" DockPanel.Dock="Top">
                 <MenuItem Header="Emulator">
-                    <MenuItem Header="Load Game" Click="LoadROM_Button" />
+
+                    <MenuItem Header="Load ROM" Click="LoadROM_Button">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="Disk" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
                     <MenuItem Header="Pause" IsCheckable="True" IsChecked="False" Click="Menu_Pause_Click"/>
                     <Separator/>
 
                     <MenuItem Header="Save State" x:Name="SaveStateTab">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="ContentSave" />
+                        </MenuItem.Icon>
                         <MenuItem Header="New Savestate" Click="SaveNewState_Button" />
                         <Separator />
 
                     </MenuItem>
 
                     <MenuItem Header="Load State" x:Name="LoadStateTab">
-                        
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="Reload" />
+                        </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 
