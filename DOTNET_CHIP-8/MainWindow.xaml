@@ -13,7 +13,7 @@
         mc:Ignorable="d"
         
         Title="CHIP-8 Emulator"
-        Height="500" Width="720"
+        Height="580" Width="980"
         AllowDrop="True"
         Drop="Window_Drop"
         WindowStartupLocation="CenterScreen">
