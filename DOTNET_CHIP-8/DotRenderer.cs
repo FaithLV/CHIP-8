@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -28,12 +29,31 @@ namespace DOTNET_CHIP_8
         Brush PixelOFF = new SolidColorBrush(Colors.Black);
         Brush RedPixel = new SolidColorBrush(Colors.Red);
 
-        public DotRenderer()
+        public DotRenderer(Window Host)
         {
             for (int i = 0; i < width * height; i++)
             {
                 Pixels[i] = (Rectangle)Pixel(i);
             }
+
+            TestGraphicsHardware(Host);
+        }
+
+        private void TestGraphicsHardware(Window Host)
+        {
+            HwndSource hwnd = PresentationSource.FromVisual(Host) as HwndSource;
+
+            if (hwnd != null)
+            {
+                HwndTarget hwndT = hwnd.CompositionTarget;
+                Console.WriteLine($"HwndTarget.RenderMode = {hwndT.RenderMode}");
+            }
+            else
+            {
+                Console.WriteLine("Failed to capture render device.");
+            }
+            
+            Console.WriteLine($"RenderCapability Tier = {RenderCapability.Tier >> 16}");
         }
 
         public void RenderPixels(byte[] buffer)

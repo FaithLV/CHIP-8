@@ -17,7 +17,7 @@ namespace DOTNET_CHIP_8
     public partial class MainWindow : Window
     {
         CHIP_8 CPUCore = null;
-        DotRenderer Renderer = new DotRenderer();
+        DotRenderer Renderer = null;
         SaveStateManager StateManager = null;
         DispatcherTimer gfxClock = null;
         DispatcherTimer cpuClock = null;
@@ -206,6 +206,8 @@ namespace DOTNET_CHIP_8
 
         private void InitializeGFXClock()
         {
+            Renderer = new DotRenderer(this);
+
             gfxClock = new DispatcherTimer();
             gfxClock.Interval = TimeSpan.FromMilliseconds(16.67);
             gfxClock.Tick += GFX_Tick;
