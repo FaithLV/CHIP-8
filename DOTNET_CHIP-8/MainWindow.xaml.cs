@@ -287,11 +287,6 @@ namespace DOTNET_CHIP_8
             double speed = Double.Parse(config.Read("Interval", "CPUCore"));
             Console.WriteLine($"CPU Clock Interval: cycle per {speed}ms ");
             cpuClock.Interval = TimeSpan.FromMilliseconds(speed);
-
-            double gfx_speed = Double.Parse(config.Read("Interval", "GFX"));
-            Console.WriteLine($"GFX Buffer will be drawn every {gfx_speed}ms");
-            gfxClock.Interval = TimeSpan.FromMilliseconds(gfx_speed);
-
         }
 
         private void CreateKeyArrays()

@@ -169,4 +169,10 @@
     <PreBuildEvent>XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\VirtualKeys.xml" "$(TargetDir)\data\" /S /Y
 XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\KeyMappings.xml" "$(TargetDir)\data\" /S /Y</PreBuildEvent>
   </PropertyGroup>
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <MoveToLibFolder Include="$(OutputPath)*.dll ; $(OutputPath)*.pdb ; $(OutputPath)*.xml" />
+    </ItemGroup>
+    <Move SourceFiles="@(MoveToLibFolder)" DestinationFolder="$(OutputPath)lib" OverwriteReadOnlyFiles="true" />
+  </Target>
 </Project>

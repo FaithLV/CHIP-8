@@ -61,8 +61,7 @@ namespace DOTNET_CHIP_8
         public uint romSize = 0;
 
         public bool isPaused = false;
-        
-
+       
         //VM Initialization
         public CHIP_8()
         {
