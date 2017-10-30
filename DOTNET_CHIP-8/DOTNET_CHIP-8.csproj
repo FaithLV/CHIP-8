@@ -170,10 +170,16 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\beep.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\VirtualKeys.xml" "$(TargetDir)\data\" /S /Y
-XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\KeyMappings.xml" "$(TargetDir)\data\" /S /Y</PreBuildEvent>
+XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\KeyMappings.xml" "$(TargetDir)\data\" /S /Y
+XCOPY "$(SolutionDir)DOTNET_CHIP-8\data\beep.wav" "$(TargetDir)\data\" /S /Y</PreBuildEvent>
   </PropertyGroup>
   <Target Name="AfterBuild">
     <ItemGroup>
