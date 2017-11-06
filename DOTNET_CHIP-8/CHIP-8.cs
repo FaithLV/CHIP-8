@@ -107,7 +107,7 @@ namespace DOTNET_CHIP_8
             CycleLenght.Start();
 
             opcode = (ushort)(memory[pc] << 8 | memory[pc + 1]);
-           
+
             // Process opcode
             switch (opcode & 0xF000)
             {
@@ -279,7 +279,7 @@ namespace DOTNET_CHIP_8
                             {
                                 if ((pixel & (0x80 >> xline)) != 0)
                                 {
-                                    if((x + xline + ((y + yline) * 64)) < gfx.Length)
+                                    if ((x + xline + ((y + yline) * 64)) < gfx.Length)
                                     {
                                         if (gfx[(x + xline + ((y + yline) * 64))] == 1)
                                         {
@@ -289,7 +289,11 @@ namespace DOTNET_CHIP_8
                                     }
                                     else
                                     {
-                                        Console.WriteLine($"Tried to write outside gfx buffer at : {(x + xline + ((y + yline) * 64))}");
+                                        if (gfx[((x + xline + ((y + yline) * 64))) - gfx.Length] == 1)
+                                        {
+                                            cpu_V[0xF] = 1;
+                                        }
+                                        gfx[(x + xline + ((y + yline) * 64)) - gfx.Length] ^= 1;
                                     }
                                 }
                             }
@@ -448,7 +452,7 @@ namespace DOTNET_CHIP_8
         {
             try
             {
-                if(BeepClock.Elapsed.Seconds > 2)
+                if (BeepClock.Elapsed.Seconds > 2)
                 {
                     BeepSound.PlaySync();
                     BeepClock.Reset();
