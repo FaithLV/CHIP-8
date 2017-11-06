@@ -269,7 +269,6 @@ namespace DOTNET_CHIP_8
                         ushort y = cpu_V[(opcode & 0x00F0) >> 4];
                         ushort height = (ushort)(opcode & 0x000F);
                         ushort pixel;
-                        //Console.WriteLine("Writing to gfx buffer");
 
                         cpu_V[0xF] = 0;
                         for (int yline = 0; yline < height; yline++)
@@ -279,21 +278,28 @@ namespace DOTNET_CHIP_8
                             {
                                 if ((pixel & (0x80 >> xline)) != 0)
                                 {
-                                    if ((x + xline + ((y + yline) * 64)) < gfx.Length)
+
+                                    int wrapping_px;
+                                    wrapping_px = (x + xline + ((y + yline) * 64));
+
+                                    if (wrapping_px < gfx.Length)
                                     {
-                                        if (gfx[(x + xline + ((y + yline) * 64))] == 1)
+                                        if (gfx[wrapping_px] == 1)
                                         {
                                             cpu_V[0xF] = 1;
                                         }
-                                        gfx[x + xline + ((y + yline) * 64)] ^= 1;
+                                        gfx[wrapping_px] ^= 1;
                                     }
                                     else
                                     {
-                                        if (gfx[((x + xline + ((y + yline) * 64))) - gfx.Length] == 1)
+                                        //sprite wraps, handle it
+
+                                        if (gfx[wrapping_px - gfx.Length] == 1)
                                         {
                                             cpu_V[0xF] = 1;
                                         }
-                                        gfx[(x + xline + ((y + yline) * 64)) - gfx.Length] ^= 1;
+
+                                        gfx[wrapping_px - gfx.Length] ^= 1;
                                     }
                                 }
                             }
