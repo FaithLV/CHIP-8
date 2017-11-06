@@ -271,12 +271,18 @@ namespace DOTNET_CHIP_8
                             {
                                 if ((pixel & (0x80 >> xline)) != 0)
                                 {
-                                    if (gfx[(x + xline + ((y + yline) * 64))] == 1)
+                                    if((x + xline + ((y + yline) * 64)) < gfx.Length)
                                     {
-                                        cpu_V[0xF] = 1;
+                                        if (gfx[(x + xline + ((y + yline) * 64))] == 1)
+                                        {
+                                            cpu_V[0xF] = 1;
+                                        }
+                                        gfx[x + xline + ((y + yline) * 64)] ^= 1;
                                     }
-                                    gfx[x + xline + ((y + yline) * 64)] ^= 1;
-                                    //Console.WriteLine($"Writing 1 to buffer 0:{x + xline + ((y + yline) * 64)}");
+                                    else
+                                    {
+                                        Console.WriteLine($"Tried to write outside gfx buffer at : {(x + xline + ((y + yline) * 64))}");
+                                    }
                                 }
                             }
                         }
