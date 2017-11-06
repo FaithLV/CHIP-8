@@ -295,7 +295,7 @@ namespace DOTNET_CHIP_8
             cpuClock.Interval = TimeSpan.FromMilliseconds(speed);
 
             double gfxspeed = Double.Parse(config.Read("Interval", "GFX_XXX"));
-            Console.WriteLine($"GFX Clock Interval: frame per {speed}ms ");
+            Console.WriteLine($"GFX Clock Interval: frame per {gfxspeed}ms ");
             gfxClock.Interval = TimeSpan.FromMilliseconds(speed);
 
             FlashFlags[0] = Int32.Parse(config.Read("FlashCPUCycle", "DebugFlags"));

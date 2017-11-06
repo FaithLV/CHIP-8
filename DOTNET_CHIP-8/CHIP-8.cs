@@ -61,7 +61,8 @@ namespace DOTNET_CHIP_8
         public uint romSize = 0;
 
         public bool isPaused = false;
-       
+        Stopwatch BeepClock = new Stopwatch();
+
         //VM Initialization
         public CHIP_8()
         {
@@ -70,6 +71,7 @@ namespace DOTNET_CHIP_8
             Console.WriteLine($"Stack Size: {stack.Length}");
             LoadFonts();
             TimerClock.Tick += UpdateTimers;
+            BeepClock.Start();
         }
 
         public void LoadGame(byte[] game)
@@ -419,12 +421,18 @@ namespace DOTNET_CHIP_8
 
         }
 
-        System.Media.SoundPlayer BeepSound = new System.Media.SoundPlayer(@"beep.wav");
+        System.Media.SoundPlayer BeepSound = new System.Media.SoundPlayer(@"data\beep.wav");
         private void Beep()
         {
             try
             {
-                BeepSound.Play();
+                if(BeepClock.Elapsed.Seconds > 2)
+                {
+                    BeepSound.PlaySync();
+                    BeepClock.Reset();
+                    BeepClock.Start();
+                }
+
             }
             catch
             {
