@@ -63,12 +63,19 @@ namespace DOTNET_CHIP_8
         public bool isPaused = false;
         Stopwatch BeepClock = new Stopwatch();
 
+        Stopwatch CycleLenght = new Stopwatch();
+        public long CycleTime;
+
+        public delegate void CycleFinishedEventHandler(object sender, EventArgs args);
+        public event CycleFinishedEventHandler CycleFinished;
+
         //VM Initialization
         public CHIP_8()
         {
             Console.WriteLine("Powering CHIP-8...");
             Console.WriteLine($"System Memory: {memory.Length} bytes");
             Console.WriteLine($"Stack Size: {stack.Length}");
+
             LoadFonts();
             TimerClock.Tick += UpdateTimers;
             BeepClock.Start();
@@ -97,9 +104,10 @@ namespace DOTNET_CHIP_8
                 return;
             }
 
-            opcode = (ushort)(memory[pc] << 8 | memory[pc + 1]);
-            OpCodeLog.Add($"0x:{opcode.ToString("X4")} == 0x:{(opcode & 0xF000).ToString("X4")}");
+            CycleLenght.Start();
 
+            opcode = (ushort)(memory[pc] << 8 | memory[pc + 1]);
+           
             // Process opcode
             switch (opcode & 0xF000)
             {
@@ -404,6 +412,14 @@ namespace DOTNET_CHIP_8
                     break;
             }
 
+            CycleLenght.Stop();
+
+            CycleTime = CycleLenght.ElapsedTicks;
+            OpCodeLog.Add($"0x:{opcode.ToString("X4")} lasted {CycleTime} ticks");
+
+            OnCycleFinished();
+            CycleLenght.Reset();
+
         }
 
         Random rr = new Random();
@@ -467,6 +483,11 @@ namespace DOTNET_CHIP_8
         {
             key[_key] = 0;
             //keypress = false;
+        }
+
+        protected virtual void OnCycleFinished()
+        {
+            CycleFinished?.Invoke(this, EventArgs.Empty);
         }
 
     }

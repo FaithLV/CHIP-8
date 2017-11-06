@@ -222,6 +222,12 @@ namespace DOTNET_CHIP_8
             cpuClock = new DispatcherTimer();
             cpuClock.Interval = TimeSpan.FromMilliseconds(0.5);
             cpuClock.Tick += CPUCycle;
+            CPUCore.CycleFinished += CPUCore_CycleFinished;
+        }
+
+        private void CPUCore_CycleFinished(object sender, EventArgs args)
+        {
+            CycleTimerDisplay.Text = $"Cycle: {CPUCore.CycleTime}";
         }
 
         private void InitializeInputDriver()

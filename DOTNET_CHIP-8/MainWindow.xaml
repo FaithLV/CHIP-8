@@ -70,5 +70,6 @@
         <Rectangle x:Name="GPU_Marker" Grid.Row="1" Visibility="Hidden" Fill="Red" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25"/>
 
         <TextBlock x:Name="FrameTimerDisplay" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <TextBlock x:Name="CycleTimerDisplay" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>
