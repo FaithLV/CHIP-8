@@ -267,6 +267,7 @@ namespace DOTNET_CHIP_8
         //Load ROM into memory
         private void LoadNewGame(byte[] game)
         {
+            EmuLogo.Visibility = Visibility.Collapsed;
             FreshChip();
 
             CPUCore.LoadGame(game);

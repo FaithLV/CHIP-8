@@ -83,6 +83,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -243,6 +244,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\ch8ic.png" />
     <Resource Include="ch8ic.ico" />
     <Content Include="data\beep.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

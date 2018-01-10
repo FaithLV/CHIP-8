@@ -21,7 +21,7 @@ namespace DOTNET_CHIP_8
         float width = 64;
         float height = 32;
         public int check = 0;
-        public int size = 30;
+        public int size = 20;
 
         public long FrameTime;
 

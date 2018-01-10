@@ -12,6 +12,7 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         mc:Ignorable="d"
         
+        
         Title="CHIP-8 Emulator"
         Height="580" Width="980"
         AllowDrop="True"
@@ -70,6 +71,7 @@
             </Menu>
         </DockPanel>
 
+        <Image x:Name="EmuLogo" Grid.Row="1" Source="Resources/ch8ic.png" Opacity="0.5" Margin="100"/>
         <Grid x:Name="RenderPort" Grid.Row="1" />
 
         <Rectangle x:Name="CPU_Marker" Grid.Row="1" Visibility="Hidden" Fill="Green" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
