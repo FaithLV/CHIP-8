@@ -68,6 +68,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ch8ic.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -240,6 +243,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="ch8ic.ico" />
     <Content Include="data\beep.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
