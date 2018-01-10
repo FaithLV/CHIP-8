@@ -46,6 +46,7 @@ namespace DOTNET_CHIP_8
             Console.WriteLine($"Pixel buffer size: {Renderer.check}");
 
             StateManager = new SaveStateManager(CPUCore);
+            ScanROMs();
 
             ReadConfiguration();
 
@@ -101,6 +102,25 @@ namespace DOTNET_CHIP_8
                 gameBuffer = File.ReadAllBytes(romDialog.FileName);
                 LoadNewGame(gameBuffer);
             }
+        }
+
+        private void ScanROMs()
+        {
+            foreach (var rom in Directory.GetFiles($"{AppDomain.CurrentDomain.BaseDirectory}\\roms\\"))
+            {
+                MenuItem romItem = new MenuItem();
+                romItem.Header = Path.GetFileName(rom);
+                romItem.Click += RomItem_Click;
+                RomLibraryTab.Items.Add(romItem);
+            }
+        }
+
+        private void RomItem_Click(object sender, RoutedEventArgs e)
+        {
+            var obj = (MenuItem)sender;
+
+            byte[] gameBuffer = File.ReadAllBytes($"{AppDomain.CurrentDomain.BaseDirectory}\\roms\\{obj.Header}");
+            LoadNewGame(gameBuffer);
         }
 
         private void DumpGFXBuffer_Button(object sender, RoutedEventArgs e)
