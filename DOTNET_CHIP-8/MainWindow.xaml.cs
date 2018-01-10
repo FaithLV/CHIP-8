@@ -39,16 +39,10 @@ namespace DOTNET_CHIP_8
             AllocConsole();
             Thread.Sleep(5);
 
-            CPUCore = new CHIP_8();
-            InitializeCPUClock();
-
-            InitializeGFXClock();
-            Console.WriteLine($"Pixel buffer size: {Renderer.check}");
+            FreshChip();
 
             StateManager = new SaveStateManager(CPUCore);
             ScanROMs();
-
-            ReadConfiguration();
 
             InitializeKeyboardHook();
             InitializeInputDriver();
@@ -217,6 +211,17 @@ namespace DOTNET_CHIP_8
 
         //Initializations
 
+        private void FreshChip()
+        {
+            CPUCore = new CHIP_8();
+            InitializeCPUClock();
+
+            InitializeGFXClock();
+            Console.WriteLine($"Pixel buffer size: {Renderer.check}");
+
+            ReadConfiguration();
+        }
+
         private void InitializeKeyboardHook()
         {
             KeyboardHook = new GlobalKeyboardHook();
@@ -261,6 +266,8 @@ namespace DOTNET_CHIP_8
         //Load ROM into memory
         private void LoadNewGame(byte[] game)
         {
+            FreshChip();
+
             CPUCore.LoadGame(game);
             cpuClock.Start();
             gfxClock.Start();
