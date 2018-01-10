@@ -41,7 +41,6 @@ namespace DOTNET_CHIP_8
 
             FreshChip();
 
-            StateManager = new SaveStateManager(CPUCore);
             ScanROMs();
 
             InitializeKeyboardHook();
@@ -218,6 +217,8 @@ namespace DOTNET_CHIP_8
 
             InitializeGFXClock();
             Console.WriteLine($"Pixel buffer size: {Renderer.check}");
+
+            StateManager = new SaveStateManager(CPUCore);
 
             ReadConfiguration();
         }
