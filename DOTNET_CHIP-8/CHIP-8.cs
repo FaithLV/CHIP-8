@@ -78,6 +78,7 @@ namespace DOTNET_CHIP_8
 
             LoadFonts();
             TimerClock.Tick += UpdateTimers;
+            BeepSound.LoadAsync();
             BeepClock.Start();
         }
 
@@ -460,7 +461,7 @@ namespace DOTNET_CHIP_8
             {
                 if (BeepClock.Elapsed.Seconds > 2)
                 {
-                    BeepSound.PlaySync();
+                    BeepSound.Play();
                     BeepClock.Reset();
                     BeepClock.Start();
                 }
