@@ -11,16 +11,17 @@ using System.Windows.Threading;
 
 namespace DOTNET_CHIP_8
 {
-
-    class CHIP_8
+    internal class CHIP_8
     {
         //VM Specifications
         public byte[] memory = new byte[4096];
         public byte[] cpu_V = new byte[16];
         public byte[] gfx = new byte[64 * 32]; //gfx buffer
-        ushort[] key = new ushort[16];
+        private ushort[] key = new ushort[16];
 
-        byte[] Fontset = {
+        public bool DisableAudio = false;
+
+        private readonly byte[] Fontset = {
             0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
             0x20, 0x60, 0x20, 0x20, 0x70, // 1
             0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
@@ -41,7 +42,7 @@ namespace DOTNET_CHIP_8
 
         //two ("timers") registers count at 60hz
         //when set over 0, they will count down to 0
-        DispatcherTimer TimerClock = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(16.666666666667) };
+        private DispatcherTimer TimerClock = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(16.666666666667) };
         public ushort delay_timer = 0;
         public ushort sound_timer = 0;
 
@@ -56,14 +57,14 @@ namespace DOTNET_CHIP_8
 
         public List<string> OpCodeLog = new List<string>();
 
-        bool DrawCall = false;
-        bool keypress = false;
+        private bool DrawCall = false;
+        private bool keypress = false;
         public uint romSize = 0;
 
         public bool isPaused = false;
-        Stopwatch BeepClock = new Stopwatch();
+        private Stopwatch BeepClock = new Stopwatch();
 
-        Stopwatch CycleLenght = new Stopwatch();
+        private Stopwatch CycleLenght = new Stopwatch();
         public long CycleTime;
 
         public delegate void CycleFinishedEventHandler(object sender, EventArgs args);
@@ -433,7 +434,7 @@ namespace DOTNET_CHIP_8
 
         }
 
-        Random rr = new Random();
+        private Random rr = new Random();
         private ushort Random()
         {
             ushort random = (ushort)rr.Next(0, 255);
@@ -454,14 +455,17 @@ namespace DOTNET_CHIP_8
 
         }
 
-        System.Media.SoundPlayer BeepSound = new System.Media.SoundPlayer(@"data\beep.wav");
+        private System.Media.SoundPlayer BeepSound = new System.Media.SoundPlayer(@"data\beep.wav");
         private void Beep()
         {
             try
             {
                 if (BeepClock.Elapsed.Seconds > 2)
                 {
-                    BeepSound.Play();
+                    if (!DisableAudio)
+                    {
+                        BeepSound.Play();
+                    }
                     BeepClock.Reset();
                     BeepClock.Start();
                 }

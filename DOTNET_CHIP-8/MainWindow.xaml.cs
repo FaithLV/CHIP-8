@@ -269,6 +269,7 @@ namespace DOTNET_CHIP_8
         {
             EmuLogo.Visibility = Visibility.Collapsed;
             FreshChip();
+            CPUCore.DisableAudio = DisableAudioItem.IsChecked;
 
             CPUCore.LoadGame(game);
             cpuClock.Start();
@@ -440,6 +441,12 @@ namespace DOTNET_CHIP_8
                 }
             }
 
+        }
+
+        private void DisableAudio_Click(object sender, RoutedEventArgs e)
+        {
+            var obj = (MenuItem)sender;
+            CPUCore.DisableAudio = obj.IsChecked;
         }
     }
 }
