@@ -14,7 +14,7 @@
         
         
         Title="CHIP-8 Emulator"
-        Height="580" Width="980"
+        Height="800" Width="1295"
         AllowDrop="True"
         Drop="Window_Drop"
         WindowStartupLocation="CenterScreen">
