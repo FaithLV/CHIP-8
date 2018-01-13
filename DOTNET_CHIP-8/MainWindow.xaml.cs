@@ -448,5 +448,21 @@ namespace DOTNET_CHIP_8
             var obj = (MenuItem)sender;
             CPUCore.DisableAudio = obj.IsChecked;
         }
+
+        private void Renderer_Select(object sender, RoutedEventArgs e)
+        {
+            var obj = (MenuItem)sender;
+            Console.WriteLine($"Setting RendererAPI to {obj.Header}");
+            obj.IsEnabled = false;
+
+            foreach (MenuItem option in RendererList.Items)
+            {
+                if (obj != option)
+                {
+                    option.IsEnabled = true;
+                    option.IsChecked = false;
+                } 
+            }
+        }
     }
 }

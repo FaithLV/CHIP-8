@@ -18,6 +18,7 @@
         AllowDrop="True"
         Drop="Window_Drop"
         WindowStartupLocation="CenterScreen">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -71,6 +72,13 @@
                         <MenuItem Header="Dump OpCode Log" Click="DumpOpCodes_Button"/>
                     </MenuItem>
                 </MenuItem>
+
+                <MenuItem Header="Renderer" x:Name="RendererList">
+                    <MenuItem Header="DotRenderer" IsCheckable="True" Click="Renderer_Select"/>
+                    <MenuItem Header="OpenGL" IsCheckable="True" Click="Renderer_Select"/>
+                    <MenuItem Header="Vulkan" IsCheckable="True" Click="Renderer_Select"/>
+                </MenuItem>
+
             </Menu>
         </DockPanel>
 
