@@ -11,13 +11,16 @@ using System.Collections.Specialized;
 using System.Xml;
 using System.Linq;
 using Ookii.Dialogs.Wpf;
+using OpenTK.Graphics.OpenGL4;
 
 namespace DOTNET_CHIP_8
 {
     public partial class MainWindow : Window
     {
+        private string SelectedRenderer = "DotRenderer";
+
         CHIP_8 CPUCore = null;
-        DotRenderer Renderer = null;
+        DotRenderer DOTRenderer = null;
         SaveStateManager StateManager = null;
         DispatcherTimer gfxClock = null;
         DispatcherTimer cpuClock = null;
@@ -39,6 +42,8 @@ namespace DOTNET_CHIP_8
             AllocConsole();
             Thread.Sleep(5);
 
+            ReadGraphicsAPI();
+
             FreshChip();
 
             ScanROMs();
@@ -47,6 +52,24 @@ namespace DOTNET_CHIP_8
             InitializeInputDriver();
 
             PopulateSaveStates();
+        }
+
+        private void ReadGraphicsAPI()
+        {
+            IniFile config = new IniFile("emuconfig.ini");
+
+            //Read G_API from cfg
+            string gpuapi = config.Read("API", "Renderer");
+            Console.WriteLine($"Loaded GraphicsAPI: {gpuapi}");
+            SelectedRenderer = gpuapi;
+            foreach (MenuItem item in RendererList.Items)
+            {
+                if ((string)item.Header == gpuapi)
+                {
+                    item.IsChecked = true;
+                    item.IsEnabled = false;
+                }
+            }
         }
 
         //Window Stuff
@@ -76,12 +99,12 @@ namespace DOTNET_CHIP_8
 
         private void TestRenderer_Button(object sender, RoutedEventArgs e)
         {
-            Renderer.TestFillPixels();
+            DOTRenderer.TestFillPixels();
         }
 
         private void SlowGFXBuffer_Button(object sender, RoutedEventArgs e)
         {
-            Renderer.SlowFillPixels();
+            DOTRenderer.SlowFillPixels();
         }
 
         private void LoadROM_Button(object sender, RoutedEventArgs e)
@@ -169,12 +192,12 @@ namespace DOTNET_CHIP_8
 
         private void GFX_ResizePixels(object sender, RoutedEventArgs e)
         {
-            Renderer.ResizePixels(15);
+            DOTRenderer.ResizePixels(15);
         }
 
         private void DotRenderer_FrameRendered(object sender, EventArgs args)
         {
-            FrameTimerDisplay.Text = $"{Renderer.FrameTime}ms";
+            FrameTimerDisplay.Text = $"{DOTRenderer.FrameTime}ms";
         }
 
         private void PopulateSaveStates()
@@ -215,8 +238,17 @@ namespace DOTNET_CHIP_8
             CPUCore = new CHIP_8();
             InitializeCPUClock();
 
-            InitializeGFXClock();
-            Console.WriteLine($"Pixel buffer size: {Renderer.check}");
+            if (SelectedRenderer == "DotRenderer")
+            {
+                Console.WriteLine("Starting with DotRenderer");
+                InitializeDotRenderer();
+                Console.WriteLine($"Pixel buffer size: {DOTRenderer.check}");
+            }
+            else if (SelectedRenderer == "OpenGL")
+            {
+                Console.WriteLine("Starting with OpenGL");
+            }
+            
 
             StateManager = new SaveStateManager(CPUCore);
 
@@ -230,17 +262,17 @@ namespace DOTNET_CHIP_8
             Console.WriteLine("Keyboard Hooked");
         }
 
-        private void InitializeGFXClock()
+        private void InitializeDotRenderer()
         {
-            Renderer = new DotRenderer(this);
+            DOTRenderer = new DotRenderer(this);
 
             gfxClock = new DispatcherTimer();
             gfxClock.Interval = TimeSpan.FromMilliseconds(16.67);
             gfxClock.Tick += GFX_Tick;
 
-            Dispatcher.Invoke(new Action(() => RenderPort.Children.Add(Renderer.RenderPort(5))));
+            Dispatcher.Invoke(new Action(() => RenderPort.Children.Add(DOTRenderer.RenderPort(5))));
 
-            Renderer.FrameRendered += DotRenderer_FrameRendered;
+            DOTRenderer.FrameRendered += DotRenderer_FrameRendered;
         }
 
         private void InitializeCPUClock()
@@ -293,7 +325,15 @@ namespace DOTNET_CHIP_8
 
         private void DrawGFXBuffer(byte[] buffer)
         {
-            Renderer.RenderPixels(buffer);
+            if (SelectedRenderer == "DotRenderer")
+            {
+                DOTRenderer.RenderPixels(buffer);
+            }
+            else if (SelectedRenderer == "OpenGL")
+            {
+                
+            }
+            
         }
 
 
@@ -454,6 +494,7 @@ namespace DOTNET_CHIP_8
             var obj = (MenuItem)sender;
             Console.WriteLine($"Setting RendererAPI to {obj.Header}");
             obj.IsEnabled = false;
+            SelectedRenderer = obj.Header.ToString();
 
             foreach (MenuItem option in RendererList.Items)
             {
