@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DOTNET_CHIP_8"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:openTkControl="clr-namespace:OpenTkControl;assembly=OpenTkControl"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -77,6 +78,14 @@
                     <MenuItem Header="DotRenderer" IsCheckable="True" Click="Renderer_Select"/>
                     <MenuItem Header="OpenGL" IsCheckable="True" Click="Renderer_Select"/>
                     <MenuItem Header="Vulkan" IsCheckable="True" Click="Renderer_Select"/>
+                </MenuItem>
+
+                <MenuItem Header="Enhancements">
+                    <MenuItem Header="Randomizer">
+                        <MenuItem Header=".NET pseudo-random number generator" Click="Randomizer_Select"/>
+                        <MenuItem Header="Atmospheric Noise True Randomizer" Click="Randomizer_Select"/>
+                    </MenuItem>
+
                 </MenuItem>
 
             </Menu>

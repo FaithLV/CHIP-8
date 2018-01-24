@@ -437,7 +437,7 @@ namespace DOTNET_CHIP_8
         private Random rr = new Random();
         private ushort Random()
         {
-            ushort random = (ushort)rr.Next(0, 255);
+            ushort random = (ushort)rr.Next(0, 256);
             return random;
         }
 

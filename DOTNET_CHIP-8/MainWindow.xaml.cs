@@ -11,6 +11,7 @@ using System.Collections.Specialized;
 using System.Xml;
 using System.Linq;
 using Ookii.Dialogs.Wpf;
+using OpenTkControl;
 using OpenTK.Graphics.OpenGL4;
 
 namespace DOTNET_CHIP_8
@@ -20,10 +21,12 @@ namespace DOTNET_CHIP_8
         private string SelectedRenderer = "DotRenderer";
 
         CHIP_8 CPUCore = null;
-        DotRenderer DOTRenderer = null;
         SaveStateManager StateManager = null;
         DispatcherTimer gfxClock = null;
         DispatcherTimer cpuClock = null;
+
+        DotRenderer DOTRenderer = null;
+        UiOpenTkControl GLControl = null;
 
         private GlobalKeyboardHook KeyboardHook;
         ObservableCollection<int> Buttons = new ObservableCollection<int>();
@@ -247,6 +250,7 @@ namespace DOTNET_CHIP_8
             else if (SelectedRenderer == "OpenGL")
             {
                 Console.WriteLine("Starting with OpenGL");
+
             }
             
 
@@ -273,6 +277,12 @@ namespace DOTNET_CHIP_8
             Dispatcher.Invoke(new Action(() => RenderPort.Children.Add(DOTRenderer.RenderPort(5))));
 
             DOTRenderer.FrameRendered += DotRenderer_FrameRendered;
+        }
+
+        private void InitializeOpenGL()
+        {
+            GLControl = new UiOpenTkControl();
+            
         }
 
         private void InitializeCPUClock()
@@ -503,6 +513,20 @@ namespace DOTNET_CHIP_8
                     option.IsEnabled = true;
                     option.IsChecked = false;
                 } 
+            }
+        }
+
+        private void Randomizer_Select(object sender, RoutedEventArgs e)
+        {
+            var obj = (MenuItem)sender;
+
+            if (obj.Header == ".NET pseudo-random number generator")
+            {
+
+            }
+            else if (obj.Header == "Atmospheric Noise True Randomizer")
+            {
+
             }
         }
     }
