@@ -81,9 +81,9 @@
                 </MenuItem>
 
                 <MenuItem Header="Enhancements">
-                    <MenuItem Header="Randomizer">
-                        <MenuItem Header=".NET pseudo-random number generator" Click="Randomizer_Select"/>
-                        <MenuItem Header="Atmospheric Noise True Randomizer" Click="Randomizer_Select"/>
+                    <MenuItem Header="Randomizer Core" IsEnabled="False">
+                        <MenuItem Header="Default (pseudo)" IsCheckable="True" Click="Randomizer_Select"/>
+                        <MenuItem Header="Atmospheric Noise" IsCheckable="True" Click="Randomizer_Select"/>
                     </MenuItem>
 
                 </MenuItem>
