@@ -12,7 +12,7 @@ namespace DOTNET_CHIP_8
         public byte[] memory = new byte[4096];
         public byte[] cpu_V = new byte[16];
         public byte[] gfx = new byte[64 * 32]; //gfx buffer
-        private ushort[] key = new ushort[16];
+        public ushort[] key = new ushort[16];
 
         public bool DisableAudio = false;
 

@@ -3,10 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DOTNET_CHIP_8"
         mc:Ignorable="d"
-        Title="DebuggerWindow" Height="300" Width="300">
+        Title="Debugger" Height="460" Width="840" WindowStartupLocation="CenterScreen" >
     <Grid>
-        <TextBlock x:Name="test" Text="This is a test." />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="6*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,0,10,0">
+            <Button Content="Freeze" Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="0,0,15,0"/>
+            <Button Content="Breakpoint" Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="0,0,15,0"/>
+            <Button Content="Reference" Style="{StaticResource MaterialDesignRaisedDarkButton}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10,0,10,0">
+            <StackPanel Orientation="Vertical" x:Name="RegisterList">
+                <TextBlock Text="Registers:" FontSize="22" HorizontalAlignment="Center"/>
+                <Separator />
+            </StackPanel>
+        </StackPanel>
+        
+
     </Grid>
 </Window>
