@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace DOTNET_CHIP_8
 {
-    internal class CHIP_8
+    public class CHIP_8
     {
         //VM Specifications
         public byte[] memory = new byte[4096];
@@ -485,7 +480,7 @@ namespace DOTNET_CHIP_8
                 memory[i] = Fontset[i];
             }
 
-            Console.WriteLine("Fontset loaded into memory header.");
+            Console.WriteLine("Fontset loaded into memory");
         }
 
         public void PressButton(ushort _key)
@@ -505,5 +500,29 @@ namespace DOTNET_CHIP_8
             CycleFinished?.Invoke(this, EventArgs.Empty);
         }
 
+        public void ResetChip()
+        {
+            Console.WriteLine("Clearing all CPU buffers...");
+
+            memory = new byte[4096];
+            cpu_V = new byte[16];
+            gfx = new byte[64 * 32];
+            key = new ushort[16];
+
+            opcode = 0;
+            I = 0;
+            pc = 0x200;
+
+            stack = new ushort[16];
+            stackPtr = 0;
+
+            DrawCall = false;
+            keypress = false;
+            romSize = 0;
+
+            LoadFonts();
+
+            Console.WriteLine("Chip-8 state reset");
+        }
     }
 }

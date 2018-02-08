@@ -1,0 +1,12 @@
+﻿<Window x:Class="DOTNET_CHIP_8.DebuggerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DOTNET_CHIP_8"
+        mc:Ignorable="d"
+        Title="DebuggerWindow" Height="300" Width="300">
+    <Grid>
+        <TextBlock x:Name="test" Text="This is a test." />
+    </Grid>
+</Window>

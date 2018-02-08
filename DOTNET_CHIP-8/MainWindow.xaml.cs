@@ -253,9 +253,7 @@ namespace DOTNET_CHIP_8
 
             }
             
-
             StateManager = new SaveStateManager(CPUCore);
-
             ReadConfiguration();
         }
 
@@ -310,7 +308,8 @@ namespace DOTNET_CHIP_8
         private void LoadNewGame(byte[] game)
         {
             EmuLogo.Visibility = Visibility.Collapsed;
-            FreshChip();
+            //FreshChip();
+            CPUCore.ResetChip();
             CPUCore.DisableAudio = DisableAudioItem.IsChecked;
 
             CPUCore.LoadGame(game);
@@ -527,6 +526,23 @@ namespace DOTNET_CHIP_8
             else if (obj.Header == "Atmospheric Noise True Randomizer")
             {
 
+            }
+        }
+
+        DebuggerWindow dbg;
+        private void ShowDebuggerItem_Button(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = (MenuItem)sender;
+            if(item.IsChecked)
+            {
+                dbg = new DebuggerWindow(CPUCore);
+                dbg.Show();
+
+            }
+            else
+            {
+                dbg.Close();
+                dbg = null;
             }
         }
     }

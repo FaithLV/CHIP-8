@@ -111,8 +111,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DebuggerWindow.xaml.cs">
+      <DependentUpon>DebuggerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RandomOrgApi.cs" />
     <Compile Include="SaveStateManager.cs" />
+    <Page Include="DebuggerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

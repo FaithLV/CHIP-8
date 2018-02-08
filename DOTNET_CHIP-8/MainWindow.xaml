@@ -63,6 +63,7 @@
 
                 <MenuItem Header="Debug">
                     <MenuItem Header="Disable Audio" x:Name="DisableAudioItem" IsCheckable="True" IsChecked="False" Click="DisableAudio_Click"/>
+                    <MenuItem Header="Show Debugger" x:Name="ShowDebuggerItem" IsCheckable="True" Click="ShowDebuggerItem_Button" />
                     <MenuItem Header="GFX Debug">
                         <MenuItem Header="Dump Raw GFX Buffer" Click="DumpGFXBuffer_Button"/>
                         <MenuItem Header="Test Renderer bounds" Click="TestRenderer_Button"/>
