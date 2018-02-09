@@ -64,21 +64,23 @@
                 <MenuItem Header="Debug">
                     <MenuItem Header="Disable Audio" x:Name="DisableAudioItem" IsCheckable="True" IsChecked="False" Click="DisableAudio_Click"/>
                     <MenuItem Header="Show Debugger" x:Name="ShowDebuggerItem" IsCheckable="True" Click="ShowDebuggerItem_Button" />
-                    <MenuItem Header="GFX Debug">
+                    <MenuItem Header="Graphics Buffer">
+                        <MenuItem Header="Flash gfx buffer cycle" IsCheckable="True" Click="GFXCycleItem_Click"/>
+                        <MenuItem Header="Disable gfx buffer fetching" IsCheckable="True" Click="GFXBufferDisable_Click"/>
                         <MenuItem Header="Dump Raw GFX Buffer" Click="DumpGFXBuffer_Button"/>
                         <MenuItem Header="Test Renderer bounds" Click="TestRenderer_Button"/>
                         <MenuItem Header="Fill GFXbuffer with random data" Click="SlowGFXBuffer_Button"/>
                         <MenuItem Header="Resize Pixels" Click="GFX_ResizePixels"/>
                     </MenuItem>
-                    <MenuItem Header="CPU Debug">
+                    <MenuItem Header="Logic Core">
+                        <MenuItem Header="Flash cpu cycle" IsCheckable="True" Click="CPUCycleItem_Click"/>
                         <MenuItem Header="Dump OpCode Log" Click="DumpOpCodes_Button"/>
                     </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="Renderer" x:Name="RendererList">
+                    <MenuItem Header="nullRenderer" IsCheckable="True" Click="Renderer_Select"/>
                     <MenuItem Header="DotRenderer" IsCheckable="True" Click="Renderer_Select"/>
-                    <MenuItem Header="OpenGL" IsCheckable="True" Click="Renderer_Select"/>
-                    <MenuItem Header="Vulkan" IsCheckable="True" Click="Renderer_Select"/>
                 </MenuItem>
 
                 <MenuItem Header="Enhancements">

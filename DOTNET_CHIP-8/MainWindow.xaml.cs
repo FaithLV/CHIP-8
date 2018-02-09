@@ -37,6 +37,7 @@ namespace DOTNET_CHIP_8
         private static string[] KeyNames;
 
         private int[] FlashFlags = new int[] { 0, 0 };
+        private bool disableGFXBuffer = false;
 
         public MainWindow()
         {
@@ -327,9 +328,12 @@ namespace DOTNET_CHIP_8
         //GFX Timer tick
         private void GFX_Tick(object sender, EventArgs e)
         {
-            byte[] gfxarray = CPUCore.gfx;
-            if (FlashFlags[1] == 1){ SwitchGPU(); }
-            DrawGFXBuffer(gfxarray);
+            if(!disableGFXBuffer)
+            {
+                //byte[] gfxarray = CPUCore.gfx;
+                if (FlashFlags[1] == 1) { SwitchGPU(); }
+                DrawGFXBuffer(CPUCore.gfx);
+            }
         }
 
         private void DrawGFXBuffer(byte[] buffer)
@@ -338,11 +342,6 @@ namespace DOTNET_CHIP_8
             {
                 DOTRenderer.RenderPixels(buffer);
             }
-            else if (SelectedRenderer == "OpenGL")
-            {
-                
-            }
-            
         }
 
 
@@ -543,6 +542,45 @@ namespace DOTNET_CHIP_8
             {
                 dbg.Close();
                 dbg = null;
+            }
+        }
+
+        private void GFXCycleItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = (MenuItem)sender;
+            if (item.IsChecked)
+            {
+                FlashFlags[1] = 1;
+            }
+            else
+            {
+                FlashFlags[1] = 0;
+            }
+        }
+
+        private void CPUCycleItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = (MenuItem)sender;
+            if (item.IsChecked)
+            {
+                FlashFlags[0] = 1;
+            }
+            else
+            {
+                FlashFlags[0] = 0;
+            }
+        }
+
+        private void GFXBufferDisable_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = (MenuItem)sender;
+            if (item.IsChecked)
+            {
+                disableGFXBuffer = true;
+            }
+            else
+            {
+                disableGFXBuffer = false;
             }
         }
     }
