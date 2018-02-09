@@ -328,6 +328,7 @@ namespace DOTNET_CHIP_8
         //GFX Timer tick
         private void GFX_Tick(object sender, EventArgs e)
         {
+            GC.TryStartNoGCRegion();
             if(!disableGFXBuffer)
             {
                 //byte[] gfxarray = CPUCore.gfx;
