@@ -532,6 +532,14 @@ namespace DOTNET_CHIP_8
         private void ShowDebuggerItem_Button(object sender, RoutedEventArgs e)
         {
             MenuItem item = (MenuItem)sender;
+
+            if (CPUCore.romSize == 0)
+            {
+                Console.WriteLine("Can't open debugger without loaded rom.");
+                item.IsChecked = false;
+                return;
+            }
+
             if(item.IsChecked)
             {
                 dbg = new DebuggerWindow(CPUCore);
