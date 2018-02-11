@@ -103,6 +103,8 @@ namespace DOTNET_CHIP_8
 
             CycleLenght.Start();
 
+            Console.WriteLine(stack[0]);
+
             opcode = (ushort)(memory[pc] << 8 | memory[pc + 1]);
 
             // Process opcode

@@ -16,6 +16,7 @@ namespace DOTNET_CHIP_8
         //16 general purpose registers(byte), I, two special registers, pc, sptr = 21 in total
         private uShortRegister[] uShortRegisters = new uShortRegister[6];
         private byteRegister[] byteRegisters = new byteRegister[16];
+        private uShortRegister[] stackValues = new uShortRegister[16];
 
         //Hide window close button
         private const int GWL_STYLE = -16;
@@ -37,7 +38,7 @@ namespace DOTNET_CHIP_8
             SetupRegisterEntries();
             PopulateRegisterEntries();
 
-            FetcherLoop = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(6) };
+            FetcherLoop = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1000) };
             FetcherLoop.Tick += FetcherLoop_Tick;
             FetcherLoop.Start();
         }
@@ -74,7 +75,14 @@ namespace DOTNET_CHIP_8
                     item.Value = *item.Pointer;
                 }
             }
-            RegisterList.Items.Refresh();
+
+            foreach (uShortRegister stack in StackList.Items)
+            {
+                stack.Value = *stack.Pointer;
+            }
+
+            Dispatcher.Invoke(new Action(() => RegisterList.Items.Refresh()));
+            Dispatcher.Invoke(new Action(() => StackList.Items.Refresh()));
         }
 
         //Take CPU registers and store them in an array to be displayed later
@@ -114,6 +122,15 @@ namespace DOTNET_CHIP_8
                 }
             }
 
+            //add stack value pointers
+            for (int i = 0; i < stackValues.Length; i++)
+            {
+                fixed(ushort* p = &CPU.stack[i])
+                {
+                    stackValues[i] = NewRegisterEntry($"S{i}", p);
+                }
+            }
+
             Console.WriteLine("Finished setting up register entries.");
             Console.WriteLine($"Total register count: {uShortRegisters.Count() + byteRegisters.Count()}");
         }
@@ -134,6 +151,14 @@ namespace DOTNET_CHIP_8
                 if (byteRegisters[i] != null)
                 {
                     RegisterList.Items.Add(byteRegisters[i]);
+                }
+            }
+
+            for (int i = 0; i < stackValues.Length; i++)
+            {
+                if(stackValues[i] != null)
+                {
+                    StackList.Items.Add(stackValues[i]);
                 }
             }
         }
