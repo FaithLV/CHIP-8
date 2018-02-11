@@ -1,30 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace DOTNET_CHIP_8
 {
-    public unsafe partial class DebuggerWindow : Window
+    public partial class DebuggerWindow : Window
     {
         CHIP_8 CPU;
         DispatcherTimer FetcherLoop;
 
         //16 general purpose registers(byte), I, two special registers, pc, sptr = 21 in total
-        
         private uShortRegister[] uShortRegisters = new uShortRegister[6];
         private byteRegister[] byteRegisters = new byteRegister[16];
 
@@ -48,7 +37,7 @@ namespace DOTNET_CHIP_8
             SetupRegisterEntries();
             PopulateRegisterEntries();
 
-            FetcherLoop = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(16) };
+            FetcherLoop = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(6) };
             FetcherLoop.Tick += FetcherLoop_Tick;
             FetcherLoop.Start();
         }
@@ -70,29 +59,26 @@ namespace DOTNET_CHIP_8
         }
 
         //Fetch register values and update UI
-        private void FetcherLoop_Tick(object sender, EventArgs e)
+        private unsafe void FetcherLoop_Tick(object sender, EventArgs e)
         {
-            //unsigned short registers
-            for (int i = 0; i < uShortRegisters.Length; i++)
+            foreach(var reg in RegisterList.Items)
             {
-                if (uShortRegisters[i] != null)
+                if(reg is uShortRegister)
                 {
-                    Dispatcher.Invoke(new Action(() => uShortRegisters[i].Text = $"{uShortRegisters[i].Name}: {*uShortRegisters[i].Pointer}"));
+                    uShortRegister item = (uShortRegister)reg;
+                    item.Value = *item.Pointer;
+                }
+                else if(reg is byteRegister)
+                {
+                    byteRegister item = (byteRegister)reg;
+                    item.Value = *item.Pointer;
                 }
             }
-
-            //byte registers
-            for (int i = 0; i < byteRegisters.Length; i++)
-            {
-                if (byteRegisters[i] != null)
-                {
-                    Dispatcher.Invoke(new Action(() => byteRegisters[i].Text = $"{byteRegisters[i].Name}: {*byteRegisters[i].Pointer}"));
-                }
-            }
+            RegisterList.Items.Refresh();
         }
 
         //Take CPU registers and store them in an array to be displayed later
-        private void SetupRegisterEntries()
+        private unsafe void SetupRegisterEntries()
         {
             Console.WriteLine("Setting up Debugger register list");
             fixed(ushort* p = &CPU.opcode)
@@ -127,6 +113,9 @@ namespace DOTNET_CHIP_8
                     byteRegisters[i] = NewRegisterEntry($"V{i.ToString("X")}", p);
                 }
             }
+
+            Console.WriteLine("Finished setting up register entries.");
+            Console.WriteLine($"Total register count: {uShortRegisters.Count() + byteRegisters.Count()}");
         }
 
         //Add CPU registers to UI
@@ -136,7 +125,7 @@ namespace DOTNET_CHIP_8
             {
                 if(uShortRegisters[i] != null)
                 {
-                    RegisterList.Children.Add(uShortRegisters[i]);
+                    RegisterList.Items.Add(uShortRegisters[i]);
                 }
             }
 
@@ -144,41 +133,45 @@ namespace DOTNET_CHIP_8
             {
                 if (byteRegisters[i] != null)
                 {
-                    RegisterList.Children.Add(byteRegisters[i]);
+                    RegisterList.Items.Add(byteRegisters[i]);
                 }
             }
         }
 
         //Create new register entry for ushort types
-        private uShortRegister NewRegisterEntry(string registerName, ushort* reference)
+        private unsafe uShortRegister NewRegisterEntry(string registerName, ushort* reference)
         {
             Console.WriteLine($"Creating register entry for {registerName}");
 
-            uShortRegister entry = new uShortRegister() { Text = $"{registerName}" };
+            uShortRegister entry = new uShortRegister();
             entry.Name = registerName;
             entry.Pointer = reference;
             return entry;
         }
 
         //Create new register entry for ushort types
-        private byteRegister NewRegisterEntry(string registerName, byte* reference)
+        private unsafe byteRegister NewRegisterEntry(string registerName, byte* reference)
         {
             Console.WriteLine($"Creating register entry for {registerName}");
 
-            byteRegister entry = new byteRegister() { Text = $"{registerName}" };
+            byteRegister entry = new byteRegister(); ;
             entry.Name = registerName;
             entry.Pointer = reference;
             return entry;
         }
     }
 
-    public unsafe class uShortRegister : TextBlock
+    public sealed class uShortRegister
     {
-        public ushort* Pointer;
+        public string Name { get; set; }
+        public unsafe ushort* Pointer { get; set; }
+        public ushort Value { get; set; }
     }
 
-    public unsafe class byteRegister : TextBlock
+    public sealed class byteRegister
     {
-        public byte* Pointer;
+        public string Name { get; set; }
+        public unsafe byte* Pointer { get; set; }
+        public ushort Value { get; set; }
     }
 }
