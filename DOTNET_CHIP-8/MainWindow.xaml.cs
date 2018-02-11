@@ -518,11 +518,11 @@ namespace DOTNET_CHIP_8
         {
             var obj = (MenuItem)sender;
 
-            if (obj.Header == ".NET pseudo-random number generator")
+            if (obj.Header.ToString() == ".NET pseudo-random number generator")
             {
 
             }
-            else if (obj.Header == "Atmospheric Noise True Randomizer")
+            else if (obj.Header.ToString() == "Atmospheric Noise True Randomizer")
             {
 
             }

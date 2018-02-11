@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -12,6 +13,7 @@ namespace DOTNET_CHIP_8
     {
         CHIP_8 CPU;
         DispatcherTimer FetcherLoop;
+        DispatcherTimer MemoryLoop;
 
         //16 general purpose registers(byte), I, two special registers, pc, sptr = 21 in total
         private uShortRegister[] uShortRegisters = new uShortRegister[6];
@@ -41,6 +43,10 @@ namespace DOTNET_CHIP_8
             FetcherLoop = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1000) };
             FetcherLoop.Tick += FetcherLoop_Tick;
             FetcherLoop.Start();
+
+            MemoryLoop = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1000) };
+            MemoryLoop.Tick += MemoryLoop_Tick;
+            MemoryLoop.Start();
         }
 
         private void Debugger_Closing(object sender, CancelEventArgs e)
@@ -83,6 +89,23 @@ namespace DOTNET_CHIP_8
 
             Dispatcher.Invoke(new Action(() => RegisterList.Items.Refresh()));
             Dispatcher.Invoke(new Action(() => StackList.Items.Refresh()));
+        }
+
+        //Display memory buffer
+        private void MemoryLoop_Tick(object sender, EventArgs e)
+        {
+            Dispatcher.Invoke(new Action(() => MemoryHexViewer.Text = BytesToString(CPU.memory)));
+        }
+
+        private static string BytesToString(byte[] buffer)
+        {
+            StringBuilder hex = new StringBuilder(buffer.Length * 2);
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                hex.AppendFormat("{0:x2}", buffer[i]);
+                hex.Append(' ', 1);
+            }
+            return hex.ToString();
         }
 
         //Take CPU registers and store them in an array to be displayed later
