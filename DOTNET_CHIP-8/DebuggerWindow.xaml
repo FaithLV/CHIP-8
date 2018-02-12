@@ -42,8 +42,8 @@
                 </ListView.View>
             </ListView>
             <StackPanel Orientation="Horizontal">
-                <ScrollViewer Width="500">
-                    <TextBox TextWrapping="Wrap" x:Name="MemoryHexViewer"/>
+                <ScrollViewer Width="Auto">
+                    <TextBlock TextWrapping="Wrap" x:Name="MemoryHexViewer"/>
                 </ScrollViewer>
             </StackPanel>
         </StackPanel>

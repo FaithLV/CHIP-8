@@ -113,6 +113,7 @@
     <Compile Include="DebuggerWindow.xaml.cs">
       <DependentUpon>DebuggerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HexDump.cs" />
     <Compile Include="RandomOrgApi.cs" />
     <Compile Include="SaveStateManager.cs" />
     <Page Include="DebuggerWindow.xaml">

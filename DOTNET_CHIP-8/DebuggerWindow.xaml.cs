@@ -94,7 +94,7 @@ namespace DOTNET_CHIP_8
         //Display memory buffer
         private void MemoryLoop_Tick(object sender, EventArgs e)
         {
-            Dispatcher.Invoke(new Action(() => MemoryHexViewer.Text = BytesToString(CPU.memory)));
+            Dispatcher.Invoke(new Action(() => MemoryHexViewer.Text = HexDump.Dump(CPU.memory)));
         }
 
         private static string BytesToString(byte[] buffer)
