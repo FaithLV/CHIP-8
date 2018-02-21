@@ -40,16 +40,19 @@ namespace DOTNET_CHIP_8
 
             string hexDump = BytesToHexBuffer(ref buffer);
             string[] splitHex = hexDump.Split(' ');
-            List<string> currentBuffer = new List<string>();
+            string[] currentBuffer = new string[lineLenght];
 
-            for (int i = 0; i < splitHex.Length; i = i + lineLenght + 1)
+            for (int i = 0; i < splitHex.Length - 1; i = (lineLenght - 1) + i + 1)
             {
-                for (int j = i; j < lineLenght && j < splitHex.Length; j++)
+                for (int j = 0; j < lineLenght; j++)
                 {
-                    currentBuffer.Add(splitHex[j].ToString());
+                    Console.WriteLine($"{i + j} : {splitHex[i+j]}");
+                    currentBuffer[j] = (splitHex[i + j].ToString());
                 }
 
-                string kk = "";
+                Console.WriteLine("");
+
+                string kk = String.Empty;
                 foreach(string st in currentBuffer)
                 {
                     kk = kk + st;
@@ -60,10 +63,12 @@ namespace DOTNET_CHIP_8
                 //    Console.WriteLine("rip");
                 //}
 
-                Console.WriteLine(kk);
+                //Console.WriteLine(kk);
 
-                currentBuffer.Clear();
+                currentBuffer = new string[lineLenght];
             }
+
+            Console.WriteLine();
 
         }
     }
