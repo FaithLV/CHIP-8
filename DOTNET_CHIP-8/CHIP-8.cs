@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Windows.Threading;
 
@@ -13,6 +14,8 @@ namespace DOTNET_CHIP_8
         public byte[] cpu_V = new byte[16];
         public byte[] gfx = new byte[64 * 32]; //gfx buffer
         public ushort[] key = new ushort[16];
+
+        public MemoryStream memStream = new MemoryStream();
 
         public bool DisableAudio = false;
 
@@ -427,6 +430,8 @@ namespace DOTNET_CHIP_8
             OnCycleFinished();
             CycleLenght.Reset();
 
+            
+            memStream.Write(memory, 0, memory.Length);
         }
 
         private Random rr = new Random();

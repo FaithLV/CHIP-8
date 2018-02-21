@@ -113,10 +113,16 @@
     <Compile Include="DebuggerWindow.xaml.cs">
       <DependentUpon>DebuggerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HexDump.cs" />
+    <Compile Include="HexViewer.xaml.cs">
+      <DependentUpon>HexViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RandomOrgApi.cs" />
     <Compile Include="SaveStateManager.cs" />
     <Page Include="DebuggerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HexViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

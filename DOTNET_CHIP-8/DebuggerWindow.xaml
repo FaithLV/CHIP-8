@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Custom="clr-namespace:DOTNET_CHIP_8"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -23,7 +24,7 @@
             <Button Content="Reference" Style="{StaticResource MaterialDesignRaisedDarkButton}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10,0,10,0">
+        <StackPanel x:Name="MainContainer" Grid.Row="1" Orientation="Horizontal" Margin="10,0,10,0">
             <ListView x:Name="RegisterList" Width="Auto">
                 <ListView.View>
                     <GridView>
@@ -41,10 +42,10 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <StackPanel Orientation="Horizontal">
-                <ScrollViewer Width="Auto">
-                    <TextBlock TextWrapping="Wrap" x:Name="MemoryHexViewer"/>
-                </ScrollViewer>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Memory Dump" HorizontalAlignment="Center" FontSize="21"/>
+                <Separator/>
+                <Custom:HexViewer x:Name="HexDump" Width="Auto"/>
             </StackPanel>
         </StackPanel>
     </Grid>

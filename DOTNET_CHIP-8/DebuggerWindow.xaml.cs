@@ -94,18 +94,7 @@ namespace DOTNET_CHIP_8
         //Display memory buffer
         private void MemoryLoop_Tick(object sender, EventArgs e)
         {
-            Dispatcher.Invoke(new Action(() => MemoryHexViewer.Text = HexDump.Dump(CPU.memory)));
-        }
-
-        private static string BytesToString(byte[] buffer)
-        {
-            StringBuilder hex = new StringBuilder(buffer.Length * 2);
-            for (int i = 0; i < buffer.Length; i++)
-            {
-                hex.AppendFormat("{0:x2}", buffer[i]);
-                hex.Append(' ', 1);
-            }
-            return hex.ToString();
+            HexDump.SetBuffer(ref CPU.memory);
         }
 
         //Take CPU registers and store them in an array to be displayed later
