@@ -16,7 +16,6 @@ namespace DOTNET_CHIP_8
         public HexViewer()
         {
             InitializeComponent();
-            HexEntryList = new List<HexEntry>();
         }
 
         private static string BytesToHexBuffer(ref byte[] buffer)
@@ -32,8 +31,12 @@ namespace DOTNET_CHIP_8
 
         public void SetBuffer(ref byte[] buffer)
         {
+            //Release all items
+            Dump.Items.Clear();
+            //HexEntryList = new List<HexEntry>();
+
             //skip empty buffers
-            if(buffer.Length == 0)
+            if (buffer.Length == 0)
             {
                 return;
             }
@@ -42,34 +45,52 @@ namespace DOTNET_CHIP_8
             string[] splitHex = hexDump.Split(' ');
             string[] currentBuffer = new string[lineLenght];
 
+            //Loop through each line based on lineLenght variable
             for (int i = 0; i < splitHex.Length - 1; i = (lineLenght - 1) + i + 1)
             {
+                //set current buffer to size of lineLenght
                 for (int j = 0; j < lineLenght; j++)
                 {
-                    Console.WriteLine($"{i + j} : {splitHex[i+j]}");
                     currentBuffer[j] = (splitHex[i + j].ToString());
                 }
 
-                Console.WriteLine("");
+                //current HEX buffer as string
+                string hexbuffer = String.Join(String.Empty, currentBuffer);
 
-                string kk = String.Empty;
-                foreach(string st in currentBuffer)
+                //Create a hex entry
+                HexEntry currentEntry = new HexEntry();
+                currentEntry.Hex = String.Join(" ", currentBuffer);
+                currentEntry.Offset = i.ToString("X");
+
+                //Encode as ASCII
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < hexbuffer.Length; j += 2)
                 {
-                    kk = kk + st;
+                    string hs = hexbuffer.Substring(j, 2);
+
+                    if(Convert.ToChar(Convert.ToUInt32(hs, 16)) == 0xA)
+                    {
+                        sb.Append("· ");
+                    }
+                    else if(hs == "00")
+                    {
+                        sb.Append("· ");
+                    }
+                    else
+                    {
+                        sb.Append(Convert.ToChar(Convert.ToUInt32(hs, 16)));
+                        sb.Append(" ");
+                    }
                 }
 
-                //if(kk == "")
-                //{
-                //    Console.WriteLine("rip");
-                //}
+                currentEntry.ASCII = sb.ToString();
 
-                //Console.WriteLine(kk);
+                //Console.WriteLine($"{currentEntry.Offset} {currentEntry.Hex} {currentEntry.ASCII}");
+                //HexEntryList.Add(currentEntry);
+                Dump.Items.Add(currentEntry);
 
                 currentBuffer = new string[lineLenght];
             }
-
-            Console.WriteLine();
-
         }
     }
 

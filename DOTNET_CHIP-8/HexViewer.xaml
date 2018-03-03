@@ -20,5 +20,4 @@
             </GridView>
         </ListView.View>
     </ListView>
-    
 </UserControl>

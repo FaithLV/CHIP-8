@@ -45,7 +45,7 @@
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Memory Dump" HorizontalAlignment="Center" FontSize="21"/>
                 <Separator/>
-                <Custom:HexViewer x:Name="HexDump" Width="Auto"/>
+                <Custom:HexViewer x:Name="HexDump" Width="800" Height="500"/>
             </StackPanel>
         </StackPanel>
     </Grid>
