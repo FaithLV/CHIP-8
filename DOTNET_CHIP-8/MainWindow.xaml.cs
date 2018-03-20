@@ -281,7 +281,6 @@ namespace DOTNET_CHIP_8
         private void InitializeOpenGL()
         {
             GLControl = new UiOpenTkControl();
-            
         }
 
         private void InitializeCPUClock()
@@ -309,7 +308,9 @@ namespace DOTNET_CHIP_8
         private void LoadNewGame(byte[] game)
         {
             EmuLogo.Visibility = Visibility.Collapsed;
-            //FreshChip();
+
+            Title = $"Chip 8 Emulator | CRC : ({HashProvider.GenerateHash(game)})";
+
             CPUCore.ResetChip();
             CPUCore.DisableAudio = DisableAudioItem.IsChecked;
 
@@ -428,7 +429,6 @@ namespace DOTNET_CHIP_8
                 {
                     Buttons.Add(e.KeyboardData.VirtualCode);
                 }
-
             }
             else
             {

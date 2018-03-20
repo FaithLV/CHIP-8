@@ -113,6 +113,7 @@
     <Compile Include="DebuggerWindow.xaml.cs">
       <DependentUpon>DebuggerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HashProvider.cs" />
     <Compile Include="HexViewer.xaml.cs">
       <DependentUpon>HexViewer.xaml</DependentUpon>
     </Compile>
