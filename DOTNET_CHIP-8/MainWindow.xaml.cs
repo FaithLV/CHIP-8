@@ -39,6 +39,8 @@ namespace DOTNET_CHIP_8
         private int[] FlashFlags = new int[] { 0, 0 };
         private bool disableGFXBuffer = false;
 
+        private string CurrentHash = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -309,7 +311,9 @@ namespace DOTNET_CHIP_8
         {
             EmuLogo.Visibility = Visibility.Collapsed;
 
-            Title = $"Chip 8 Emulator | CRC : ({HashProvider.GenerateHash(game)})";
+            string hash = HashProvider.GenerateHash(game);
+            Title = $"Chip 8 Emulator | CRC : ({hash})";
+            CurrentHash = hash;
 
             CPUCore.ResetChip();
             CPUCore.DisableAudio = DisableAudioItem.IsChecked;
@@ -448,7 +452,7 @@ namespace DOTNET_CHIP_8
                     {
                         int loc = Array.IndexOf(KeyCodes, key);
                         string keyname = KeyNames[loc];
-                        string[] _binds = ControlXMLParser.Binds(keyname);
+                        string[] _binds = ControlXMLParser.Binds(keyname, CurrentHash);
 
                         if (_binds.Length >= 0)
                         {
@@ -473,7 +477,7 @@ namespace DOTNET_CHIP_8
                     {
                         int loc = Array.IndexOf(KeyCodes, key);
                         string keyname = KeyNames[loc];
-                        string[] _binds = ControlXMLParser.Binds(keyname);
+                        string[] _binds = ControlXMLParser.Binds(keyname, CurrentHash);
 
                         if (_binds.Length >= 0)
                         {

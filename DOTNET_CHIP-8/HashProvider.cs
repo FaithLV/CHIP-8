@@ -16,7 +16,7 @@ namespace DOTNET_CHIP_8
                 List<string> lib = new List<string>();
                 foreach(string dir in Directory.EnumerateDirectories(ProfileDir))
                 {
-                    Console.WriteLine(dir.Replace(ProfileDir, String.Empty));
+                    lib.Add(dir.Replace(ProfileDir, String.Empty));
                 }
                 return lib;
             }
