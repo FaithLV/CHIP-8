@@ -276,6 +276,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="data\GamepadMappings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\ch8ic.png" />
     <Resource Include="ch8ic.ico" />
     <Content Include="data\beep.wav">

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<KeyMappings>
+  <Bind gamepad="A" console="0"/>
+  <Bind gamepad="B" console="1"/>
+  <Bind gamepad="X" console="2"/>
+  <Bind gamepad="Y" console="3"/>
+</KeyMappings>

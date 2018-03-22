@@ -51,6 +51,7 @@ namespace DOTNET_CHIP_8
         //Controller input listener thread
         private BackgroundWorker xListener = new BackgroundWorker();
         private int PollingRate = 100;
+        Dictionary<string, uint> GamepadBinds;
 
         public MainWindow()
         {
@@ -96,6 +97,16 @@ namespace DOTNET_CHIP_8
             mwe_deletion = new ManagementEventWatcher(q_deletion);
             mwe_deletion.EventArrived += new EventArrivedEventHandler(USBEventArrived);
             mwe_deletion.Start();
+        }
+
+        private void CreateGamepadBindings(string gameHash)
+        {
+            GamepadBinds = new Dictionary<string, uint>();
+
+            if(File.Exists($"{AppDomain.CurrentDomain.BaseDirectory}profiles\\{gameHash}"))
+            {
+
+            }
         }
 
         private void USBEventArrived(object sender, EventArrivedEventArgs e)
@@ -417,6 +428,7 @@ namespace DOTNET_CHIP_8
             EmuLogo.Visibility = Visibility.Collapsed;
 
             string hash = HashProvider.GenerateHash(game);
+            CreateGamepadBindings(hash);
             Title = $"Chip 8 Emulator | CRC : ({hash})";
             CurrentHash = hash;
 
