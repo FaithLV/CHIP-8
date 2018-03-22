@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpDX.XInput;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,6 +10,8 @@ namespace DOTNET_CHIP_8
 {
     public class CHIP_8
     {
+        private MainWindow parent;
+
         //VM Specifications
         public byte[] memory = new byte[4096];
         public byte[] cpu_V = new byte[16];
@@ -69,8 +72,10 @@ namespace DOTNET_CHIP_8
         public event CycleFinishedEventHandler CycleFinished;
 
         //VM Initialization
-        public CHIP_8()
+        public CHIP_8(MainWindow parent)
         {
+            this.parent = parent;
+
             Console.WriteLine("Powering CHIP-8...");
             Console.WriteLine($"System Memory: {memory.Length} bytes");
             Console.WriteLine($"Stack Size: {stack.Length}");
@@ -452,12 +457,21 @@ namespace DOTNET_CHIP_8
                 Beep();
                 sound_timer--;
             }
+            else
+            {
+                parent.xController.SetVibration(new Vibration());
+            }
 
         }
 
         private System.Media.SoundPlayer BeepSound = new System.Media.SoundPlayer(@"data\beep.wav");
+        private Vibration beepVibration = new Vibration()
+        {
+            LeftMotorSpeed = 38000
+        };
         private void Beep()
         {
+            parent.xController.SetVibration(beepVibration);
             try
             {
                 if (BeepClock.Elapsed.Seconds > 2)

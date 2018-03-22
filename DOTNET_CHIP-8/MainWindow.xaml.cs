@@ -44,12 +44,13 @@ namespace DOTNET_CHIP_8
         private string CurrentHash = null;
 
         //Current xInput controller
-        private Controller xController;
+        public Controller xController;
         //Events for USB device detection
         private ManagementEventWatcher mwe_deletion;
         private ManagementEventWatcher mwe_creation;
         //Controller input listener thread
         private BackgroundWorker xListener = new BackgroundWorker();
+        private int PollingRate = 100;
 
         public MainWindow()
         {
@@ -110,6 +111,9 @@ namespace DOTNET_CHIP_8
             XInputDevice xDevice = new XInputDevice();
             var previousState = xController.GetState();
 
+            //Vibration on = new Vibration();
+            //on.LeftMotorSpeed = 38000;
+
             Console.WriteLine(xDevice.getActiveController().ToString());
 
             while (xController.IsConnected)
@@ -122,7 +126,7 @@ namespace DOTNET_CHIP_8
                     Console.WriteLine(xDevice.getPressedButton(buttons));
                 }
 
-                Thread.Sleep(100);
+                Thread.Sleep(PollingRate);
             }
 
             Console.WriteLine("Disposing of xListener thread!");
@@ -342,7 +346,7 @@ namespace DOTNET_CHIP_8
 
         private void FreshChip()
         {
-            CPUCore = new CHIP_8();
+            CPUCore = new CHIP_8(this);
             InitializeCPUClock();
 
             if (SelectedRenderer == "DotRenderer")
