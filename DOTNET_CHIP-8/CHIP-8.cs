@@ -459,7 +459,10 @@ namespace DOTNET_CHIP_8
             }
             else
             {
-                parent.xController.SetVibration(new Vibration());
+                if(parent.xController != null)
+                {
+                    parent.xController.SetVibration(new Vibration());
+                }
             }
 
         }
@@ -471,7 +474,11 @@ namespace DOTNET_CHIP_8
         };
         private void Beep()
         {
-            parent.xController.SetVibration(beepVibration);
+            if(parent.xController != null)
+            {
+                parent.xController.SetVibration(beepVibration);
+            }
+           
             try
             {
                 if (BeepClock.Elapsed.Seconds > 2)
