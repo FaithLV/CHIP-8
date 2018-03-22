@@ -481,7 +481,7 @@ namespace DOTNET_CHIP_8
            
             try
             {
-                if (BeepClock.Elapsed.Seconds > 2)
+                if (BeepClock.Elapsed.Seconds > 1)
                 {
                     if (!DisableAudio)
                     {
