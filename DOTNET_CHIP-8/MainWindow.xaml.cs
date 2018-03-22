@@ -12,7 +12,9 @@ using System.Xml;
 using System.Linq;
 using Ookii.Dialogs.Wpf;
 using OpenTkControl;
-using OpenTK.Graphics.OpenGL4;
+using SharpDX.XInput;
+using System.ComponentModel;
+using System.Management;
 
 namespace DOTNET_CHIP_8
 {
@@ -41,6 +43,14 @@ namespace DOTNET_CHIP_8
 
         private string CurrentHash = null;
 
+        //Current xInput controller
+        private Controller xController;
+        //Events for USB device detection
+        private ManagementEventWatcher mwe_deletion;
+        private ManagementEventWatcher mwe_creation;
+        //Controller input listener thread
+        private BackgroundWorker xListener = new BackgroundWorker();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -58,6 +68,97 @@ namespace DOTNET_CHIP_8
             InitializeInputDriver();
 
             PopulateSaveStates();
+
+            InitializeXInput();
+        }
+
+        private void InitializeXInput()
+        {
+            Console.WriteLine("XInput Initialization");
+            getCurrentController();
+            xListener.DoWork += xListener_DoWork;
+
+            //detect new USB device
+            WqlEventQuery q_creation = new WqlEventQuery();
+            q_creation.EventClassName = "__InstanceCreationEvent";
+            q_creation.WithinInterval = new TimeSpan(0, 0, 2);
+            q_creation.Condition = @"TargetInstance ISA 'Win32_USBControllerdevice'";
+            mwe_creation = new ManagementEventWatcher(q_creation);
+            mwe_creation.EventArrived += new EventArrivedEventHandler(USBEventArrived);
+            mwe_creation.Start();
+
+            //detect USB device deletion
+            WqlEventQuery q_deletion = new WqlEventQuery();
+            q_deletion.EventClassName = "__InstanceDeletionEvent";
+            q_deletion.WithinInterval = new TimeSpan(0, 0, 2);
+            q_deletion.Condition = @"TargetInstance ISA 'Win32_USBControllerdevice'  ";
+            mwe_deletion = new ManagementEventWatcher(q_deletion);
+            mwe_deletion.EventArrived += new EventArrivedEventHandler(USBEventArrived);
+            mwe_deletion.Start();
+        }
+
+        private void USBEventArrived(object sender, EventArrivedEventArgs e)
+        {
+            //Detect when USB devices change and rescan XInput devices
+            getCurrentController();
+        }
+
+        private void xListener_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Console.WriteLine("xListener Started");
+
+            XInputDevice xDevice = new XInputDevice();
+            var previousState = xController.GetState();
+
+            Console.WriteLine(xDevice.getActiveController().ToString());
+
+            while (xController.IsConnected)
+            {
+                var buttons = xController.GetState().Gamepad.Buttons;
+
+                //Check for buttons here!
+                if (xDevice.getPressedButton(buttons) != "None")
+                {
+                    Console.WriteLine(xDevice.getPressedButton(buttons));
+                }
+
+                Thread.Sleep(100);
+            }
+
+            Console.WriteLine("Disposing of xListener thread!");
+        }
+
+        private void getCurrentController()
+        {
+            //Checks, if controller is connected before detecting a new controller
+            bool wasConnected = false;
+            if (xController != null)
+            {
+                wasConnected = true;
+            }
+
+            XInputDevice getDevice = new XInputDevice();
+            xController = getDevice.getActiveController();
+
+            if (xController != null)
+            {
+                if (wasConnected == false)
+                {
+                    //When new a controller is detected
+                    Console.WriteLine("New XInput controller has been detected and has a listener has been attached.");
+
+                    Console.WriteLine("Starting xListener thread!");
+                    xListener.RunWorkerAsync();
+                }
+            }
+            else
+            {
+                Console.WriteLine("No controllers detected");
+                if (wasConnected == true)
+                {
+                    Console.WriteLine("XInput controller was unplugged.");
+                }
+            }
         }
 
         private void ReadGraphicsAPI()

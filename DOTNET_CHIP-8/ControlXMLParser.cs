@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace DOTNET_CHIP_8
 {
     public class ControlXMLParser
     {
-        public ControlXMLParser()
-        {
-
-        }
-
         //returns all bound keyboard
         public static string[] Binds(string key, string gamehash = null)
         {
