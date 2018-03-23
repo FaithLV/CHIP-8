@@ -51,7 +51,7 @@ namespace DOTNET_CHIP_8
         //Controller input listener thread
         private BackgroundWorker xListener = new BackgroundWorker();
         private int PollingRate = 100;
-        Dictionary<string, uint> GamepadBinds;
+        Dictionary<string, ushort> GamepadBinds;
 
         public MainWindow()
         {
@@ -101,9 +101,11 @@ namespace DOTNET_CHIP_8
 
         private void CreateGamepadBindings(string gameHash)
         {
-            GamepadBinds = new Dictionary<string, uint>();
+            GamepadBinds = new Dictionary<string, ushort>();
+            GamepadBinds.Add("DPadUp", 1);
+            GamepadBinds.Add("DPadDown", 4);
 
-            if(File.Exists($"{AppDomain.CurrentDomain.BaseDirectory}profiles\\{gameHash}"))
+            if (File.Exists($"{AppDomain.CurrentDomain.BaseDirectory}profiles\\{gameHash}"))
             {
 
             }
@@ -122,10 +124,7 @@ namespace DOTNET_CHIP_8
             XInputDevice xDevice = new XInputDevice();
             var previousState = xController.GetState();
 
-            //Vibration on = new Vibration();
-            //on.LeftMotorSpeed = 38000;
-
-            Console.WriteLine(xDevice.getActiveController().ToString());
+            string lastKey = "None";
 
             while (xController.IsConnected)
             {
@@ -134,13 +133,44 @@ namespace DOTNET_CHIP_8
                 //Check for buttons here!
                 if (xDevice.getPressedButton(buttons) != "None")
                 {
-                    Console.WriteLine(xDevice.getPressedButton(buttons));
+                    string currentKey = xDevice.getPressedButton(buttons);
+ 
+                    if(currentKey != lastKey)
+                    {
+                        ControllerUnsetButton(lastKey);
+                        ControllerSendButton(currentKey);
+                        lastKey = currentKey;
+                    }
+                    else
+                    {
+                        lastKey = currentKey;
+                    }
+                }
+                else
+                {
+                    ControllerUnsetButton(lastKey);
                 }
 
                 Thread.Sleep(PollingRate);
             }
 
             Console.WriteLine("Disposing of xListener thread!");
+        }
+
+        private void ControllerSendButton(string key)
+        {
+            if (GamepadBinds != null && GamepadBinds.ContainsKey(key))
+            {
+                CPUCore.PressButton(GamepadBinds[key]);
+            }
+        }
+
+        private void ControllerUnsetButton(string key)
+        {
+            if (GamepadBinds != null && GamepadBinds.ContainsKey(key))
+            {
+                CPUCore.UnpressButton(GamepadBinds[key]);
+            }
         }
 
         private void getCurrentController()
