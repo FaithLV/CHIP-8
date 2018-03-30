@@ -18,8 +18,6 @@ namespace DOTNET_CHIP_8
         public byte[] gfx = new byte[64 * 32]; //gfx buffer
         public ushort[] key = new ushort[16];
 
-        public MemoryStream memStream = new MemoryStream();
-
         public bool DisableAudio = false;
 
         private readonly byte[] Fontset = {
@@ -56,7 +54,7 @@ namespace DOTNET_CHIP_8
         public ushort[] stack = new ushort[16];
         public ushort stackPtr = 0;
 
-        public List<string> OpCodeLog = new List<string>();
+        //public List<string> OpCodeLog = new List<string>();
 
         private bool DrawCall = false;
         private bool keypress = false;
@@ -430,13 +428,9 @@ namespace DOTNET_CHIP_8
             CycleLenght.Stop();
 
             CycleTime = CycleLenght.ElapsedTicks;
-            OpCodeLog.Add($"0x:{opcode.ToString("X4")} lasted {CycleTime} ticks");
 
             OnCycleFinished();
             CycleLenght.Reset();
-
-            
-            memStream.Write(memory, 0, memory.Length);
         }
 
         private Random rr = new Random();

@@ -304,15 +304,17 @@ namespace DOTNET_CHIP_8
 
         private void DumpOpCodes_Button(object sender, RoutedEventArgs e)
         {
-            List<string> log = CPUCore.OpCodeLog;
+            Console.WriteLine("depreciated");
 
-            StreamWriter writer = new StreamWriter($"{AppDomain.CurrentDomain.BaseDirectory}/opcodes.log");
-            foreach (var entry in log)
-            {
-                writer.WriteLine(entry);
-            }
-            writer.Close();
-            Console.WriteLine($"Written {log.Count} entries to OPCode log");
+            //List<string> log = CPUCore.OpCodeLog;
+
+            //StreamWriter writer = new StreamWriter($"{AppDomain.CurrentDomain.BaseDirectory}/opcodes.log");
+            //foreach (var entry in log)
+            //{
+            //    writer.WriteLine(entry);
+            //}
+            //writer.Close();
+            //Console.WriteLine($"Written {log.Count} entries to OPCode log");
         }
 
         private void SaveNewState_Button(object sender, RoutedEventArgs e)
