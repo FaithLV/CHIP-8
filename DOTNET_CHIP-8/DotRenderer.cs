@@ -25,8 +25,8 @@ namespace DOTNET_CHIP_8
 
         public long FrameTime;
 
-        Brush PixelON = new SolidColorBrush(Colors.White);
-        Brush PixelOFF = new SolidColorBrush(Colors.Black);
+        SolidColorBrush PixelON = new SolidColorBrush(Colors.White);
+        SolidColorBrush PixelOFF = new SolidColorBrush(Colors.Black);
         Brush RedPixel = new SolidColorBrush(Colors.Red);
 
         public DotRenderer(Window Host)
@@ -64,11 +64,18 @@ namespace DOTNET_CHIP_8
             {
                 if(buffer[i] == 1)
                 {
-                    Pixels[i].Fill = PixelON;
+                    if(Pixels[i].Fill != PixelON)
+                    {
+                        Pixels[i].Fill = PixelON;
+                    }
+                    
                 }
                 else
                 {
-                    Pixels[i].Fill = PixelOFF;
+                    if (Pixels[i].Fill != PixelOFF)
+                    {
+                        Pixels[i].Fill = PixelOFF;
+                    }  
                 }
             }
 
