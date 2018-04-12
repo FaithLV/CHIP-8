@@ -101,13 +101,14 @@ namespace DOTNET_CHIP_8
 
         private void CreateGamepadBindings(string gameHash)
         {
+            Console.WriteLine("Clearing gamepad bindings");
             GamepadBinds = new Dictionary<string, ushort>();
-            GamepadBinds.Add("DPadUp", 1);
-            GamepadBinds.Add("DPadDown", 4);
 
-            if (File.Exists($"{AppDomain.CurrentDomain.BaseDirectory}profiles\\{gameHash}"))
+            Console.WriteLine($"{AppDomain.CurrentDomain.BaseDirectory}profiles\\{gameHash}\\Gamepad.xml");
+            if (File.Exists($"{AppDomain.CurrentDomain.BaseDirectory}profiles\\{gameHash}\\Gamepad.xml"))
             {
-
+                Console.WriteLine($"Loading custom gamepad scheme for {gameHash}");
+                GamepadBinds = ControlXMLParser.GamepadBinds(gameHash);
             }
         }
 

@@ -42,5 +42,31 @@ namespace DOTNET_CHIP_8
             }
             return _binds.ToArray();
         }
+
+        public static Dictionary<string, ushort> GamepadBinds(string hash)
+        {
+            string profilexml = $"{AppDomain.CurrentDomain.BaseDirectory}profiles\\{hash}\\Gamepad.xml";
+            var dc = new Dictionary<string, ushort>();
+
+            using (XmlReader reader = XmlReader.Create(profilexml))
+            {
+                while(reader.Read())
+                {
+                    switch (reader.Name)
+                    {
+                        case "GamepadBinds":
+                            break;
+                        case "Bind":
+                            string input = reader["gamepad"];
+                            ushort output = ushort.Parse(reader["console"]);
+                            dc.Add(input, output);
+                            break;
+                    }
+                }
+            }
+
+            Console.WriteLine($"{dc.Count} binds created for {hash}");
+            return dc;
+        }
     }
 }
