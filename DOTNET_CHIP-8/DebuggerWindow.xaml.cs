@@ -28,6 +28,9 @@ namespace DOTNET_CHIP_8
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
+        private readonly TimeSpan FetcherDelay = TimeSpan.FromMilliseconds(1000);
+        private readonly TimeSpan MemoryDelay = TimeSpan.FromMilliseconds(1000);
+
         public DebuggerWindow(CHIP_8 p)
         {
             InitializeComponent();
@@ -40,11 +43,11 @@ namespace DOTNET_CHIP_8
             SetupRegisterEntries();
             PopulateRegisterEntries();
 
-            FetcherLoop = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1000) };
+            FetcherLoop = new DispatcherTimer() { Interval = FetcherDelay };
             FetcherLoop.Tick += FetcherLoop_Tick;
             FetcherLoop.Start();
 
-            MemoryLoop = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1000) };
+            MemoryLoop = new DispatcherTimer() { Interval = MemoryDelay };
             MemoryLoop.Tick += MemoryLoop_Tick;
             MemoryLoop.Start();
         }
