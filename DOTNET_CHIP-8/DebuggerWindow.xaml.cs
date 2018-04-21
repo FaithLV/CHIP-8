@@ -28,7 +28,7 @@ namespace DOTNET_CHIP_8
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
-        private readonly TimeSpan FetcherDelay = TimeSpan.FromMilliseconds(1000);
+        private readonly TimeSpan FetcherDelay = TimeSpan.FromMilliseconds(250);
         private readonly TimeSpan MemoryDelay = TimeSpan.FromMilliseconds(1000);
 
         public DebuggerWindow(CHIP_8 p)

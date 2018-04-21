@@ -57,6 +57,8 @@ namespace DOTNET_CHIP_8
         {
             InitializeComponent();
 
+            Closing += MainWindow_Closing;
+
             AllocConsole();
             Thread.Sleep(5);
 
@@ -72,6 +74,11 @@ namespace DOTNET_CHIP_8
             PopulateSaveStates();
 
             InitializeXInput();
+        }
+
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
 
         private void InitializeXInput()
