@@ -1,4 +1,5 @@
-![](https://i.imgur.com/JnL9SUI.png)
+![](https://i.imgur.com/5xwcdnv.png)
+![](https://i.imgur.com/kXyST16.png)
 
 # CHIP-8 Interpreter
 
