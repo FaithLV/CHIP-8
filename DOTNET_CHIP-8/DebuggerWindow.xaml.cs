@@ -199,6 +199,17 @@ namespace DOTNET_CHIP_8
             entry.Pointer = reference;
             return entry;
         }
+
+        private void Freeze_Click(object sender, RoutedEventArgs e)
+        {
+            CPU.isPaused = !CPU.isPaused;
+            Console.WriteLine($"CPU pause state set: {CPU.isPaused}");
+        }
+
+        private void ASM_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
     public sealed class uShortRegister

@@ -11,7 +11,7 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         mc:Ignorable="d"
         Title="Debugger" Height="920" Width="1280" WindowStartupLocation="CenterScreen">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -19,9 +19,9 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,0,10,0">
-            <Button Content="Freeze" Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="0,0,15,0"/>
-            <Button Content="Breakpoint" Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="0,0,15,0"/>
-            <Button Content="Reference" Style="{StaticResource MaterialDesignRaisedDarkButton}"/>
+            <Button Content="Freeze" Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="0,0,15,0" Click="Freeze_Click"/>
+            <Button Content="ASM Viewer" Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="0,0,15,0" Click="ASM_Click"/>
+            <!--<Button Content="Reference" Style="{StaticResource MaterialDesignRaisedDarkButton}"/>-->
         </StackPanel>
 
         <StackPanel x:Name="MainContainer" Grid.Row="1" Orientation="Horizontal" Margin="10,0,10,0">
